@@ -31,6 +31,11 @@ public class HomePage {
     // 1. Define Locators
     private final Locator megaMenuBtn;
     private final Locator desktopLink;
+    
+    // New Locators for Search
+    private final Locator searchInput;
+    private final Locator searchBtn;
+
 
     // 2. Constructor
     public HomePage(Page page) {
@@ -38,6 +43,14 @@ public class HomePage {
         this.megaMenuBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Mega Menu"));
         // We use .setExact(true) to avoid the strict mode violation we identified during the scripting phase
         this.desktopLink = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Desktop").setExact(true));
+        
+        // --- NEW Initializations ---
+        // "Bullseye" locator: Using the Accessible Name (aria-label) via Role
+        this.searchInput = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Search For Products"));
+        
+        // "Bullseye" locator: Button role + name
+        this.searchBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Search"));
+
     }
 
     // 3. Methods define user actions
@@ -54,4 +67,12 @@ public class HomePage {
         // Return the next Page Object in the chain
         return new ProductPage(page);
     }
+    
+    // New action method
+    public void search(String text) {
+    	LOGGER.info("Searching for: {}", text);
+    	searchInput.fill(text);
+    	searchBtn.click();
+    	}
+
 }
