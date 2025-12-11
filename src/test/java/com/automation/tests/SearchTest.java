@@ -10,6 +10,33 @@ import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+/**
+ * -------------------------------------------------------------------
+ * Test Case ID:      TC-SEARCH-001
+ * Title:             Verify Search for Multiple Products
+ * -------------------------------------------------------------------
+ * Description:			Verifies that the search bar correctly navigates 
+ * 						to the results page for valid products and 
+ * 						handles missing products gracefully.
+ * Sub-System:      	Search
+ * Priority:        	P2 (Regression)
+ * Traceability:    	[Link to Jira Ticket or REQ ID]
+ * * Preconditions:		The practice website is available
+ * * Test Data Dependencies:
+ * - Data Provider: "searchData" (MacBook, iPhone, Unicorn)
+ * * User Journey:
+ * 1. Navigate to Homepage
+ * 2. Enter search term
+ * 3. Click Search
+ * 4. Verify Header and Product Visibility
+ * * Expected Result:	The search results page should display the
+ * * 					correct header and product tile for valid 
+ * * 					searches.
+ * * Author:          	[Your Name]
+ * Date:              	[Current Date]
+ * -------------------------------------------------------------------
+ */
+
 
 public class SearchTest extends BaseTest {
 	
