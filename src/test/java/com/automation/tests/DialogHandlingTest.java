@@ -69,7 +69,7 @@ public class DialogHandlingTest extends BaseTest {
 
 	@Test
 	public void handleBeforeUnload() {
-		page.navigate(getTestPageUrl());
+		page.navigate(getTestPageUrl()); // Always navigate first!
 
 		// This listener acts as insurance.
 		// In this specific test, the dialog likely won't appear (browsers suppress it),
