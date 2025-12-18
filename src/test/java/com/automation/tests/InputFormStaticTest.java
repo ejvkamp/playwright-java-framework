@@ -3,6 +3,9 @@ package com.automation.tests;
 import com.automation.base.BaseTest;
 import com.automation.models.FormData;
 import com.automation.pages.InputFormPage;
+
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -30,6 +33,13 @@ public void verifyFormWithStaticData() {
 
  // 2. Act
  inputPage.navigate();
+ 
+ //Optional: Verify country list is populated
+ // This confirms our helper method works and the dropdown is readable
+ List<String> countries = inputPage.getCountryOptions();
+ System.out.println("Found " + countries.size() + " countries.");
+ Assert.assertTrue(countries.contains("United States"), "Country list missing 'United States'");
+ 
  inputPage.submitForm(staticData);
  
  // 3. Assert
