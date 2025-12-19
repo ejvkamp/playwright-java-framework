@@ -43,7 +43,8 @@ public class MobileLayoutTest extends BaseTest {
 		// On Mobile, it collapses into a "Hamburger" icon or specific toggle.
 
 		// Assertion: The desktop menu should be hidden
-		assertThat(mobilePage.locator(".horizontal-menu")).isHidden();
+		assertThat(mobilePage.locator("ul.navbar-nav.horizontal")).isAttached();		
+		assertThat(mobilePage.locator("ul.navbar-nav.horizontal")).isHidden();
 
 		// Assertion: The mobile toggle button should be visible
 		// Used Inspect to identify the correct button locator
