@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PWA Network Test</title>
+    <style>
+        .network-banner 
+           { display: none; padding: 10px; font-weight: bold; color: white; }
+        .offline { background-color: red; }
+        .online { background-color: green; }
+    </style>
+</head>
+<body>
+    <h1>PWA Network Handling</h1>
+    <div id="offline-indicator" class="network-banner offline">
+        You are currently offline!</div>
+    <div id="online-indicator" class="network-banner online">
+        Connection restored!</div>
+    <script>
+window.addEventListener('offline', () => {
+  document.getElementById('offline-indicator').style.display = 'block';
+  	  document.getElementById('online-indicator').style.display = 'none';
+ 	});
+      window.addEventListener('online', () => {
+ 	   document.getElementById('offline-indicator').style.display = 'none';
+   document.getElementById('online-indicator').style.display = 'block';
+});
+    </script>
+</body>
+</html>
