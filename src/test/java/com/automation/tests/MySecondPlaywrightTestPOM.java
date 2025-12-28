@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.testng.Assert; 
+
 
 /**
  * Test Case ID:   	TC-PRICE-001
@@ -39,8 +41,7 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
 
   @Test(description = "Verify Cart Total Calculation for Multi-Quantity Item")
   public void advancedPriceCalculationTest() {
-  //String productName = "MacBook Pro";
-	  String productName = "iPhone";
+  String productName = "MacBook Pro";
   int quantityToClick = 4; // 1 default + 4 clicks = 5 total
 
   // --- ARRANGE ---
@@ -62,7 +63,7 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
 
   // 3. Continue Navigation
   home.navigateToDesktopPage();
-  
+
   // 4. Filtering
   // The ProductPage handles all filter logic
   productPage.filterByPrice();
