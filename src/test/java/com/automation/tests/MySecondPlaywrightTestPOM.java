@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 **/
 
 
+// Triggering CI build
+
 
 public class MySecondPlaywrightTestPOM extends BaseTest {
 	
