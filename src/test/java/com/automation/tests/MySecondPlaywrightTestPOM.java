@@ -3,7 +3,6 @@ package com.automation.tests;
 import com.automation.base.BaseTest;
 import com.automation.pages.*;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import org.slf4j.Logger;
@@ -66,10 +65,6 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
 
   // 3. Continue Navigation
   home.navigateToDesktopPage();
-  
-//SABOTAGE: Force a failure to test artifact collection
-  Assert.fail("Intentional Failure to verify Jenkins Artifacts");
-
 
   // 4. Filtering
   // The ProductPage handles all filter logic
