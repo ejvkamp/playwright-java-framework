@@ -34,9 +34,11 @@ pipeline {
                  sh 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
               } else {
             bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
-         }
-             }
+			  } else {
+				  echo "Playwright browsers already installed. Skipping download."
           }
+        }
+     }
   }
 
   stage('Run Tests') {
