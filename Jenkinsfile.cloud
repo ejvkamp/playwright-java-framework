@@ -1,0 +1,46 @@
+pipeline {
+	agent any
+   
+	tools {
+	 maven 'Maven'
+	 jdk 'JDK-21'
+	}
+	
+	// NEW: Inject credentials securely for this specific job
+	environment {
+	 LT_USERNAME = credentials('lambdatest-username')
+	 LT_ACCESS_KEY = credentials('lambdatest-key')
+	}
+   
+	stages {
+	 stage('Checkout') {
+	  steps {
+	   git branch: 'main', url: 'https://github.com/ejvkamp/playwright-java-framework.git'
+	  }
+	 }
+	 
+	 // Note: We skipped 'Install Browsers' because we are connecting to a remote grid!
+   
+	 stage('Run Tests on Cloud') {
+	  steps {
+	   script {
+		// UPDATED: We pass -Dbrowser=cloud
+		// Our BaseTest will read the env vars automatically
+		if (isUnix()) {
+		 sh 'mvn clean test -Dbrowser=cloud'
+		} else {
+		 bat 'mvn clean test -Dbrowser=cloud'
+		}
+	   }
+	  }
+	 }
+	}
+   
+	post {
+	 always {
+	  junit '**/target/surefire-reports/*.xml'
+	  archiveArtifacts artifacts: 'traces/**/*.zip', allowEmptyArchive: true
+	 }
+	}
+   }
+   
