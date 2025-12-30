@@ -14,7 +14,7 @@ pipeline {
 	// Check out the code from the Git repository
     // IMPORTANT: Without "branch: 'main'", the pipeline defaults to
     // checking out 'master' even if your job config is set to 'main'
-    git branch: 'main', git 'https://github.com/ejvkamp/playwright-java-framework.git'
+    git branch: 'main', url: 'https://github.com/ejvkamp/playwright-java-framework.git'
     }
   }
 
