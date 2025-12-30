@@ -63,7 +63,7 @@ public class BaseTest {
 		LOGGER.info("Setting up the Playwright and Browser for the suite...");
 
 		playwright = Playwright.create();
-		
+
 		// 1. Try to get browser from Command Line (Maven -Dbrowser=...)
 		String browserName = System.getProperty("browser");
 
@@ -72,17 +72,16 @@ public class BaseTest {
 			// 2. If null, fallback to Config File
 			browserName = ConfigReader.getProperty("browser");
 			System.out.println("Using Config File to determine browser");
-			}
+		}
 
-			// 3. If still null, default to Chromium (Safety net)
-			if (browserName == null) {
-				browserName = "chromium";
-				System.out.println("Unable to determine browser");
-			}
-			
-			boolean isHeadless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
-			
-	
+		// 3. If still null, default to Chromium (Safety net)
+		if (browserName == null) {
+			browserName = "chromium";
+			System.out.println("Unable to determine browser");
+		}
+
+		boolean isHeadless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
+
 		if (browserName.equalsIgnoreCase("cloud")) {
 			// --- PATH 1: CLOUD EXECUTION ---
 			LOGGER.info("Connecting to Cloud Grid...");
@@ -104,7 +103,7 @@ public class BaseTest {
 
 				// Dynamic Build Name (Useful for CI/CD integration later)
 				String buildName = System.getenv("BUILD_NUMBER");
-				caps.put("build", buildName != null ? buildName : "Local Build 1.0");
+				caps.put("build", buildName != null ? "Jenkins Build " + buildName : "Local Build");
 
 				caps.put("user", user);
 				caps.put("accessKey", accessKey);
@@ -152,6 +151,7 @@ public class BaseTest {
 			// Update the browser launch log
 			LOGGER.info("Launching Broswer: {} (Headless: {})", browserName, isHeadless);
 		}
+
 	}
 
 	/**
@@ -202,7 +202,12 @@ public class BaseTest {
 
 		// --- New Cloud Sync Logic (Remote Artifacts) ---
 		// If running in Cloud, send the Pass/Fail status to the Dashboard
-		if (ConfigReader.getProperty("browser").equalsIgnoreCase("cloud")) {
+		String browserName = System.getProperty("browser");
+		if (browserName == null) {
+			browserName = ConfigReader.getProperty("browser");
+		}
+
+		if (browserName != null && browserName.equalsIgnoreCase("cloud")) {
 
 			String status = result.getStatus() == ITestResult.SUCCESS ? "passed" : "failed";
 			String reason = result.getThrowable() != null ? result.getThrowable().getMessage() : "Test Completed";
