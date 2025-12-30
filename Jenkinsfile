@@ -2,14 +2,19 @@ pipeline {
  agent any // Run on any available "Stage Crew" (Agent)
 
  tools {
-   maven 'Maven' // Must match Global Tool Config name
+  // Critical: These names must EXACTLY match the "Name" field in 
+  // Manage Jenkins > Global Tool Configuration
+   maven 'Maven' 
    jdk 'JDK-21'
  }
 
  stages {
   stage('Checkout') {
     steps {
-    git 'https://github.com/ejvkamp/playwright-java-framework.git'
+	// Check out the code from the Git repository
+    // IMPORTANT: Without "branch: 'main'", the pipeline defaults to
+    // checking out 'master' even if your job config is set to 'main'
+    git branch: 'main', git 'https://github.com/ejvkamp/playwright-java-framework.git'
     }
   }
 
