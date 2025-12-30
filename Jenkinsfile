@@ -2,7 +2,7 @@ pipeline {
  agent any // Run on any available "Stage Crew" (Agent)
 
  tools {
-   maven 'Maven-3.9' // Must match Global Tool Config name
+   maven 'Maven-3.9.9' // Must match Global Tool Config name
    jdk 'JDK-21'
  }
 
