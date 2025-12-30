@@ -24,8 +24,7 @@ pipeline {
 	 stage('Run Tests on Cloud') {
 	  steps {
 	   script {
-		// UPDATED: We pass -Dbrowser=cloud
-		// Our BaseTest will read the env vars automatically
+		// UPDATED: We pass -Dbrowser=cloud processed by BaseTest
 		if (isUnix()) {
 		 sh 'mvn clean test -Dbrowser=cloud'
 		} else {

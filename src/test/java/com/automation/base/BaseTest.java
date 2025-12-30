@@ -63,11 +63,26 @@ public class BaseTest {
 		LOGGER.info("Setting up the Playwright and Browser for the suite...");
 
 		playwright = Playwright.create();
+		
+		// 1. Try to get browser from Command Line (Maven -Dbrowser=...)
+		String browserName = System.getProperty("browser");
 
-		// Read configuration
-		String browserName = ConfigReader.getProperty("browser");
-		boolean isHeadless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
+		// 1. DETERMINE BROWSER (Priority: CLI -> Config -> Default)
+		if (browserName == null) {
+			// 2. If null, fallback to Config File
+			browserName = ConfigReader.getProperty("browser");
+			System.out.println("Using Config File to determine browser");
+			}
 
+			// 3. If still null, default to Chromium (Safety net)
+			if (browserName == null) {
+				browserName = "chromium";
+				System.out.println("Unable to determine browser");
+			}
+			
+			boolean isHeadless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
+			
+	
 		if (browserName.equalsIgnoreCase("cloud")) {
 			// --- PATH 1: CLOUD EXECUTION ---
 			LOGGER.info("Connecting to Cloud Grid...");
@@ -202,11 +217,13 @@ public class BaseTest {
 
 			if (page != null) {
 				try {
-					// TRANSMISSION: We pass the status string as an ARGUMENT to a dummy function which avoids Syntax errors
-             
-	                String action = "lambdatest_action: {\"action\": \"setTestStatus\", \"arguments\": {\"status\": \"" + status + "\", \"remark\": \"" + reason + "\"}}";
-	                
-	                page.evaluate("_ => {}", action);
+					// TRANSMISSION: We pass the status string as an ARGUMENT to a dummy function
+					// which avoids Syntax errors
+
+					String action = "lambdatest_action: {\"action\": \"setTestStatus\", \"arguments\": {\"status\": \""
+							+ status + "\", \"remark\": \"" + reason + "\"}}";
+
+					page.evaluate("_ => {}", action);
 
 					// WAIT: Allow cloud to process update before killing connection
 					Thread.sleep(2000);
