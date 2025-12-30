@@ -21,6 +21,14 @@ pipeline {
   stage('Install Browsers') {
     steps {
       script {
+		 // OPTIMIZATION: Check if browsers are already installed to save time.
+ 		// Playwright stores binaries in specific cache folders.
+ 		def browsersInstalled = fileExists("${env.HOME}/.cache/ms-playwright") || 
+ 		  fileExists("${env.USERPROFILE}\\AppData\\Local\\ms-playwright")
+ 
+ 	if (!browsersInstalled) {
+    	 echo "Playwright browsers not found. Installing..."
+		
       // Install Playwright browsers (safe to run multiple times)
          if (isUnix()) {
                  sh 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
