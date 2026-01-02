@@ -61,9 +61,19 @@ pipeline {
 
  post {
   always {
-  // Publish reports regardless of pass/fail
-  junit '**/target/surefire-reports/*.xml'
-  archiveArtifacts artifacts: 'traces/**/*.zip, screenshots/**/*.png', allowEmptyArchive: true
+	  // Archive standard artifacts
+	  archiveArtifacts artifacts: 'traces/**/*.zip, screenshots/**/*.png', allowEmptyArchive: true
+   
+	  // GENERATE ALLURE REPORT
+	  allure([
+	   includeProperties: false,
+	   jdk: '',
+	   properties: [],
+	   reportBuildPolicy: 'ALWAYS',
+	   // Must match the directory in pom.xml/allure.properties!
+	   results: [[path: 'target/allure-results']],
+	   reportPath: 'allure-report' // Keeps history for trend graphs
+	  ])
     }
   }
 }

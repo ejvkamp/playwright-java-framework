@@ -32,6 +32,11 @@ import com.deque.html.axecore.results.AxeResults;
 
 //import org.testng.Assert;
 
+// Allure reporting imports
+import java.nio.file.Files;
+
+
+
 /**
  * ------------------------------------------------------------------ Class
  * Name: BaseTest Description: The foundational class for all UI tests. It
@@ -182,7 +187,6 @@ public class BaseTest {
 	 */
 	@AfterMethod
 	public void closeContext(ITestResult result) {
-
 		// IF FAILURE: Attach Screenshot to Allure
 		if (!result.isSuccess()) {
 			try {
@@ -198,6 +202,7 @@ public class BaseTest {
 			// Existing Trace Logic
 			// If test failed, save the trace zip locally
 			if (!result.isSuccess()) {
+				try {
 				// Create traces dir if needed
 				File tracesDir = new File("traces");
 				if (!tracesDir.exists()) {
@@ -211,6 +216,19 @@ public class BaseTest {
 				// Stop tracing and save to file
 				context.tracing().stop(new Tracing.StopOptions().setPath(tracePath));
 				LOGGER.info("Trace saved to: {}", tracePath.toAbsolutePath());
+				
+				// NEW: Attach Trace to Allure Report
+				   // Ensure file exists before reading to avoid exceptions
+				   if (Files.exists(tracePath)) {
+				    Allure.addAttachment("Playwright Trace", "application/zip",
+				     new ByteArrayInputStream(Files.readAllBytes(tracePath)), ".zip");
+				   }
+				   
+			} catch (Exception e) {
+				LOGGER.warn("Failed to save or attach Playwright Trace", e);
+			}
+	
+				
 			} else {
 				// Even if it passed we need to stop tracing to free up memory
 				context.tracing().stop();
