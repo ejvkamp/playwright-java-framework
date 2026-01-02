@@ -72,8 +72,7 @@ pipeline {
 	   reportBuildPolicy: 'ALWAYS',
 	   // Must match the directory in pom.xml/allure.properties!
 	   results: [[path: 'target/allure-results']],
-	   reportPath: 'allure-report' // Keeps history for trend graphs
-	  ])
+	   ])
     }
   }
 }
