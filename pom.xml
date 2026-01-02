@@ -52,6 +52,12 @@
     <version>2.10.1</version>
     <scope>test</scope>
 </dependency>
+<dependency>
+    <groupId>io.qameta.allure</groupId>
+    <artifactId>allure-testng</artifactId>
+    <version>2.27.0</version>
+    <scope>test</scope>
+</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -75,6 +81,10 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
+					<!-- Explicitly define output directory to avoid clutter -->
+        			<systemPropertyVariables>
+            			<allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+        			</systemPropertyVariables>
 				</configuration>
 			</plugin>
 		</plugins>

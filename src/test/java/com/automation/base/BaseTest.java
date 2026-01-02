@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 
 // For trace viewer
 import com.microsoft.playwright.Tracing;
+
+import io.qameta.allure.Allure;
+import java.io.ByteArrayInputStream;
+
 import org.testng.ITestResult;
 import java.nio.file.Paths;
 import java.io.File;
@@ -179,70 +183,83 @@ public class BaseTest {
 	@AfterMethod
 	public void closeContext(ITestResult result) {
 
-		// Existing Trace Logic
-		// If test failed, save the trace zip locally
+		// IF FAILURE: Attach Screenshot to Allure
 		if (!result.isSuccess()) {
-			// Create traces dir if needed
-			File tracesDir = new File("traces");
-			if (!tracesDir.exists()) {
-				tracesDir.mkdirs();
+			try {
+				// Capture screenshot as bytes
+				byte[] screenshot = page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
+
+				// Attach to Allure Report
+				Allure.addAttachment("Failure Screenshot", new ByteArrayInputStream(screenshot));
+			} catch (Exception e) {
+				LOGGER.warn("Failed to capture screenshot for Allure: " + e.getMessage());
 			}
 
-			// Generate timestamp and path
-			String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			java.nio.file.Path tracePath = Paths.get("traces/" + result.getName() + "_" + timestamp + ".zip");
+			// Existing Trace Logic
+			// If test failed, save the trace zip locally
+			if (!result.isSuccess()) {
+				// Create traces dir if needed
+				File tracesDir = new File("traces");
+				if (!tracesDir.exists()) {
+					tracesDir.mkdirs();
+				}
 
-			// Stop tracing and save to file
-			context.tracing().stop(new Tracing.StopOptions().setPath(tracePath));
-			LOGGER.info("Trace saved to: {}", tracePath.toAbsolutePath());
-		} else {
-			// Even if it passed we need to stop tracing to free up memory
-			context.tracing().stop();
-		}
+				// Generate timestamp and path
+				String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+				java.nio.file.Path tracePath = Paths.get("traces/" + result.getName() + "_" + timestamp + ".zip");
 
-		// --- New Cloud Sync Logic (Remote Artifacts) ---
-		// If running in Cloud, send the Pass/Fail status to the Dashboard
-		String browserName = System.getProperty("browser");
-		if (browserName == null) {
-			browserName = ConfigReader.getProperty("browser");
-		}
-
-		if (browserName != null && browserName.equalsIgnoreCase("cloud")) {
-
-			String status = result.getStatus() == ITestResult.SUCCESS ? "passed" : "failed";
-			String reason = result.getThrowable() != null ? result.getThrowable().getMessage() : "Test Completed";
-
-			// Sanitize the reason to prevent JSON/JS injection or breaking the script with
-			// newlines
-			if (reason != null) {
-				reason = reason.replace("\"", "'").replace("\n", " ").replace("\r", " ");
+				// Stop tracing and save to file
+				context.tracing().stop(new Tracing.StopOptions().setPath(tracePath));
+				LOGGER.info("Trace saved to: {}", tracePath.toAbsolutePath());
 			} else {
-				reason = "Unknown Error";
+				// Even if it passed we need to stop tracing to free up memory
+				context.tracing().stop();
 			}
 
-			if (page != null) {
-				try {
-					// TRANSMISSION: We pass the status string as an ARGUMENT to a dummy function
-					// which avoids Syntax errors
+			// --- New Cloud Sync Logic (Remote Artifacts) ---
+			// If running in Cloud, send the Pass/Fail status to the Dashboard
+			String browserName = System.getProperty("browser");
+			if (browserName == null) {
+				browserName = ConfigReader.getProperty("browser");
+			}
 
-					String action = "lambdatest_action: {\"action\": \"setTestStatus\", \"arguments\": {\"status\": \""
-							+ status + "\", \"remark\": \"" + reason + "\"}}";
+			if (browserName != null && browserName.equalsIgnoreCase("cloud")) {
 
-					page.evaluate("_ => {}", action);
+				String status = result.getStatus() == ITestResult.SUCCESS ? "passed" : "failed";
+				String reason = result.getThrowable() != null ? result.getThrowable().getMessage() : "Test Completed";
 
-					// WAIT: Allow cloud to process update before killing connection
-					Thread.sleep(2000);
+				// Sanitize the reason to prevent JSON/JS injection or breaking the script with
+				// newlines
+				if (reason != null) {
+					reason = reason.replace("\"", "'").replace("\n", " ").replace("\r", " ");
+				} else {
+					reason = "Unknown Error";
+				}
 
-				} catch (Exception e) {
-					LOGGER.warn("Failed to update Cloud Dashboard status: " + e.getMessage());
+				if (page != null) {
+					try {
+						// TRANSMISSION: We pass the status string as an ARGUMENT to a dummy function
+						// which avoids Syntax errors
+
+						String action = "lambdatest_action: {\"action\": \"setTestStatus\", \"arguments\": {\"status\": \""
+								+ status + "\", \"remark\": \"" + reason + "\"}}";
+
+						page.evaluate("_ => {}", action);
+
+						// WAIT: Allow cloud to process update before killing connection
+						Thread.sleep(2000);
+
+					} catch (Exception e) {
+						LOGGER.warn("Failed to update Cloud Dashboard status: " + e.getMessage());
+					}
 				}
 			}
-		}
 
-		// Existing cleanup logic
-		if (context != null) {
-			LOGGER.info("Closing context for the method...");
-			context.close();
+			// Existing cleanup logic
+			if (context != null) {
+				LOGGER.info("Closing context for the method...");
+				context.close();
+			}
 		}
 	}
 

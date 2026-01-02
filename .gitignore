@@ -22,3 +22,8 @@ traces/
 # OS
 .DS_Store
 Thumbs.db
+
+# Allure
+allure-report/
+-jar
+src/test/resources/allure.properties

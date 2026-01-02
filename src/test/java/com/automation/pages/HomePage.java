@@ -8,6 +8,8 @@ import com.automation.utils.ConfigReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.qameta.allure.Allure;
+
 
 /**
  * -------------------------------------------------------------------
@@ -55,24 +57,32 @@ public class HomePage {
 
     // 3. Methods define user actions
     public void navigate() {
-        // Reads the URL from the config.properties file
-        page.navigate(ConfigReader.getProperty("baseUrl"));
+    	// Wrap the logic in a step description
+    	// Reads the URL from the config.properties file
+    	Allure.step("Navigate to the Home Page", () -> {
+    		page.navigate(ConfigReader.getProperty("baseUrl"));
+    	});
     }
-
+   
+    
     public ProductPage navigateToDesktopPage() {
-        //System.out.println("Navigating to Desktops page...");
-    	LOGGER.info("Navigating to Desktops page...");
-        megaMenuBtn.hover();
-        desktopLink.click();
-        // Return the next Page Object in the chain
-        return new ProductPage(page);
+    	// You can return values from inside steps!
+    	return Allure.step("Navigate to Desktop Category via Mega Menu", () -> {
+    		LOGGER.info("Navigating to Desktops page...");
+            megaMenuBtn.hover();
+            desktopLink.click();
+            // Return the next Page Object in the chain
+            return new ProductPage(page);
+    	});
     }
     
     // New action method
     public void search(String text) {
-    	LOGGER.info("Searching for: {}", text);
-    	searchInput.fill(text);
-    	searchBtn.click();
+    	// Dynamic description using the variable
+    	Allure.step("Search for product: " + text, () -> {
+    		LOGGER.info("Searching for: {}", text);
+        	searchInput.fill(text);
+        	searchBtn.click();
+    		});
     	}
-
 }

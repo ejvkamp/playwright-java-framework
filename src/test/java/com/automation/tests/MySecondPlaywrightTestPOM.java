@@ -5,9 +5,16 @@ import com.automation.pages.*;
 
 import org.testng.annotations.Test;
 
+//import static org.testng.Assert.fail;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.testng.annotations.Listeners;
+
+//add Allure imports
+import io.qameta.allure.*; // Import annotations
+import io.qameta.allure.testng.AllureTestNg; 
 
 
 /**
@@ -35,6 +42,8 @@ import org.slf4j.LoggerFactory;
 // Triggering CI build
 
 
+//Required to hook into TestNG lifecycle
+@Listeners({AllureTestNg.class})
 public class MySecondPlaywrightTestPOM extends BaseTest {
 	
   // ADD THIS LINE to create a logger instance for this test class
@@ -42,6 +51,10 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
 
 
   @Test(description = "Verify Cart Total Calculation for Multi-Quantity Item")
+  @Description("Verify that a user can add a product to the cart and the total price is calculated correctly.")
+  @Severity(SeverityLevel.CRITICAL)
+  @Epic("Shopping Cart Functionality")
+  @Feature("Price Calculation")
   public void advancedPriceCalculationTest() {
   String productName = "MacBook Pro";
   int quantityToClick = 4; // 1 default + 4 clicks = 5 total
@@ -65,6 +78,8 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
 
   // 3. Continue Navigation
   home.navigateToDesktopPage();
+  
+  //Assert.fail("Inserting failure to test Allure reporting");
 
   // 4. Filtering
   // The ProductPage handles all filter logic
