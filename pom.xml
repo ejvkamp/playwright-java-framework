@@ -81,7 +81,14 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
-					<!-- Explicitly define output directory to avoid clutter -->
+					<!-- 1. Force the Allure Listener -->
+				  	<properties>
+				   	  <property>
+				    	    <name>listener</name>
+				    	    <value>io.qameta.allure.testng.AllureTestNg</value>
+				   	  </property>
+				  	</properties>
+					<!-- 2. Define Output Directory (Crucial for Clean Builds) -->
         			<systemPropertyVariables>
             			<allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
         			</systemPropertyVariables>
