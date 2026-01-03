@@ -81,17 +81,7 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
-					<!-- CORRECT LISTENER CONFIGURATION -->
-				  	<properties>
-				   	  <property>
-				    	    <name>usedefaultlisteners</name>
-				    	    <value>false</value>
-				   	  </property>
-				   	<property>
-				   	    <name>listener</name>
-				    	    <value>io.qameta.allure.testng.AllureTestNg</value>
-				    	  </property>
-				  	</properties>
+
 					<!-- Define Output Directory (Crucial for Clean Builds) -->
         			<systemPropertyVariables>
             			<allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
