@@ -3,6 +3,9 @@ package com.automation.pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+
+import io.qameta.allure.Allure;
+
 import com.microsoft.playwright.assertions.LocatorAssertions; // For IsVisibleOptions
 
 import org.slf4j.Logger;
@@ -54,33 +57,36 @@ public class ProductPage {
     }
 
     public void filterByPrice() {
-        //System.out.println("Filtering price slider...");
-    	LOGGER.info("Filtering price slider...");
-        minSlider.focus();
-        // Use the keyboard interaction loop we perfected
-        for (int i = 0; i < 902; i++) {
-            minSlider.press("ArrowRight");
-        }
-        // Assert: Wait for filter to apply using the specific text
-        assertThat(resultsTextSlider).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        Allure.step("Filter by Price Range",()->{
+        	LOGGER.info("Filtering price slider...");
+            minSlider.focus();
+            // Use the keyboard interaction loop we perfected
+            for (int i = 0; i < 902; i++) {
+                minSlider.press("ArrowRight");
+            }
+            // Assert: Wait for filter to apply using the specific text
+            assertThat(resultsTextSlider).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        });
     }
 
     public void filterByInStock() {
-        //System.out.println("Filtering by 'In Stock'...");
-    	LOGGER.info("Filtering by 'In Stock'...");
-        // Ensure element is visible before interacting
-        inStockFilter.evaluate("element => element.scrollIntoView({ behavior: 'smooth', block: 'center' })");
-        page.waitForTimeout(500); 
-        inStockFilter.click();
-        
-        // Assert: Wait for filter to apply using the specific text
-        assertThat(resultsTextInStock).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        Allure.step("Filter by 'In Stock' status", ()->{
+        	LOGGER.info("Filtering by 'In Stock'...");
+            // Ensure element is visible before interacting
+            inStockFilter.evaluate("element => element.scrollIntoView({ behavior: 'smooth', block: 'center' })");
+            page.waitForTimeout(500); 
+            inStockFilter.click();
+            
+            // Assert: Wait for filter to apply using the specific text
+            assertThat(resultsTextInStock).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        });
     }
 
     public ProductDetailsPage selectProduct() {
-        //System.out.println("Clicking product...");
-    	LOGGER.info("Clicking product...");
-        macBookProLink.click();
+    	Allure.step("Select the first available product", ()->{
+    		LOGGER.info("Clicking product...");
+            macBookProLink.click();
+    	});
         // Return the next Page Object in the chain
         return new ProductDetailsPage(page);
     }

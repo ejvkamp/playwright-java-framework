@@ -52,6 +52,7 @@
     <version>2.10.1</version>
     <scope>test</scope>
 </dependency>
+<!-- Allure Reporting Library -->
 <dependency>
     <groupId>io.qameta.allure</groupId>
     <artifactId>allure-testng</artifactId>
@@ -73,6 +74,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
+			    <!-- Maven Surefile Plugin (Executes Tests) -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.3.0</version>
@@ -81,12 +83,28 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
-
+					<!-- CORRECT LISTENER CONFIGURATION -->
+				  	 <properties>
+				   	  <property>
+				    	   <name>usedefaultlisteners</name>
+				    	   <value>false</value>
+				   	  </property>
+				   	 <property>
+				    	 <name>listener</name>
+				    	  <value>io.qameta.allure.testng.AllureTestNg</value>
+				   	 </property>
+				  	</properties>
 					<!-- Define Output Directory (Crucial for Clean Builds) -->
         			<systemPropertyVariables>
             			<allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
         			</systemPropertyVariables>
 				</configuration>
+			</plugin>
+			<plugin>
+			    <!-- Allure Maven Plugin (Views Reports) -->
+				<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-maven</artifactId>
+			<version>2.12.0</version>
 			</plugin>
 		</plugins>
 	</build>

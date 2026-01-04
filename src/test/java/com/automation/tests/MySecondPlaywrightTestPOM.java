@@ -9,7 +9,7 @@ import static org.testng.Assert.fail;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
 
 //add Allure imports
@@ -79,7 +79,7 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
   // 3. Continue Navigation
   home.navigateToDesktopPage();
   
-  Assert.fail("Inserting failure to test Allure reporting");
+  //Assert.fail("Inserting failure to test Allure reporting");
 
   // 4. Filtering
   // The ProductPage handles all filter logic

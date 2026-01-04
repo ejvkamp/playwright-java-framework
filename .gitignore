@@ -27,3 +27,4 @@ Thumbs.db
 allure-report/
 -jar
 src/test/resources/allure.properties
+.allure/

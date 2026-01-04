@@ -4,6 +4,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import io.qameta.allure.Allure;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,46 +51,49 @@ public class CartPage {
   // 4. Business Logic Verification
   public void verifyPriceCalculation(String productName) {
     // System.out.println("Verifying price calculation for " + productName + "...");
-    LOGGER.info("Verifying price calculation for {} ...", productName);
-    
-    double unitPrice = getUnitPrice(productName);
-    int quantity = getQuantity(productName);
-    double actualTotal = getActualTotal(productName);
-    double expectedTotal = unitPrice * quantity;
-    
-    //System.out.println("Unit: " + unitPrice + " | Qty: " + quantity + " | Total: " + actualTotal);
-    LOGGER.info("Unit: {} | Qty: {} | Total: {}", unitPrice, quantity, actualTotal);
-    
-    // Assertion with delta for floating point precision
-    if (Math.abs(expectedTotal - actualTotal) > 0.01) {
-      // Log the error first
-      LOGGER.error("Price calculation failed! Expected: {} Actual: {}", expectedTotal, actualTotal);
-      
-      // Then throw the error and fail the test
-      throw new RuntimeException("Price calculation failed! Expected: " + expectedTotal + " Actual: " + actualTotal);
-    }
-    //System.out.println("Price calculation verified.");
-    LOGGER.info("Price calculation verified.");
+	Allure.step("Verifying price calculation for " + productName, ()->{
+		LOGGER.info("Verifying price calculation for {} ...", productName);
+	    
+	    double unitPrice = getUnitPrice(productName);
+	    int quantity = getQuantity(productName);
+	    double actualTotal = getActualTotal(productName);
+	    double expectedTotal = unitPrice * quantity;
+	    
+	    //System.out.println("Unit: " + unitPrice + " | Qty: " + quantity + " | Total: " + actualTotal);
+	    LOGGER.info("Unit: {} | Qty: {} | Total: {}", unitPrice, quantity, actualTotal);
+	    
+	    // Assertion with delta for floating point precision
+	    if (Math.abs(expectedTotal - actualTotal) > 0.01) {
+	      // Log the error first
+	      LOGGER.error("Price calculation failed! Expected: {} Actual: {}", expectedTotal, actualTotal);
+	      
+	      // Then throw the error and fail the test
+	      throw new RuntimeException("Price calculation failed! Expected: " + expectedTotal + " Actual: " + actualTotal);
+	    }
+	    //System.out.println("Price calculation verified.");
+	    LOGGER.info("Price calculation verified.");
+	});
   }
 
   // 5. Cleanup Action
   public void cleanupAndReturn(String productName) {
-    //System.out.println("Cleaning up cart...");
-	  LOGGER.info("Cleaning up cart...");
-    
-    // Click Remove on the specific product row
-    // FIX: Use Locator.GetByRoleOptions because we are calling it on a Locator (productRow), not a Page.
-    page.getByTitle("Remove").click();
-        
-    // Verify cart is empty
-    assertThat(page.locator("#content").getByText("Your shopping cart is empty!")).isVisible();
-    
-    // Click Continue to go home
-    page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Continue")).click();
-    
-    // Verify we are back home
-    assertThat(page).hasTitle("Your Store");
-    //System.out.println("Cleanup complete. Test finished.");
-    LOGGER.info("Cleanup complete. Test finished.");
+	  Allure.step("Remove " + productName + " and return to Home", ()->{
+		  LOGGER.info("Cleaning up cart...");
+		    
+		    // Click Remove on the specific product row
+		    // FIX: Use Locator.GetByRoleOptions because we are calling it on a Locator (productRow), not a Page.
+		    page.getByTitle("Remove").click();
+		        
+		    // Verify cart is empty
+		    assertThat(page.locator("#content").getByText("Your shopping cart is empty!")).isVisible();
+		    
+		    // Click Continue to go home
+		    page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Continue")).click();
+		    
+		    // Verify we are back home
+		    assertThat(page).hasTitle("Your Store");
+		    //System.out.println("Cleanup complete. Test finished.");
+		    LOGGER.info("Cleanup complete. Test finished."); 
+	  });
   }
 }
