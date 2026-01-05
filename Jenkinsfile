@@ -44,20 +44,20 @@ pipeline {
   
 
 
-  stage('Run Tests') {
-    steps {
-      script {
+stage('Run Tests') {
+ steps {
+  // This ensures the pipeline continues to post actions even if tests fail
+  catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+   script {
     if (isUnix()) {
-            sh 'mvn clean test'
-         } else {
-                 bat 'mvn clean test'
-                    }
-                }
-            }
-        }
-		
+     sh 'mvn clean test'
+    } else {
+     bat 'mvn clean test'
+    }
+   }
   }
-
+ }
+}
 
  post {
   always {

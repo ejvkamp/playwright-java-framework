@@ -23,6 +23,8 @@ pipeline {
    
 	 stage('Run Tests on Cloud') {
 	  steps {
+		// This ensures the pipeline continues to post actions even if tests fail
+  		catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
 	   script {
 		// UPDATED: We pass -Dbrowser=cloud processed by BaseTest
 		if (isUnix()) {

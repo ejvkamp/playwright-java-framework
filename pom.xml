@@ -83,6 +83,9 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
+					<!-- Marks builds as failed instead of unstable -->
+					<testFailureIgnore>false</testFailureIgnore>
+					
 					<!-- CORRECT LISTENER CONFIGURATION -->
 				  	 <properties>
 				   	  <property>
