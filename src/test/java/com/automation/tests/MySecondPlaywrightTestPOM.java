@@ -79,7 +79,7 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
   // 3. Continue Navigation
   home.navigateToDesktopPage();
   
-  Assert.fail("Inserting failure to test Allure reporting");
+  //Assert.fail("Inserting failure to test Allure reporting");
 
   // 4. Filtering
   // The ProductPage handles all filter logic
