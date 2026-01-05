@@ -187,6 +187,102 @@ public class BaseTest {
 	 */
 	@AfterMethod
 	public void closeContext(ITestResult result) {
+	    
+	    // 1. IF FAILURE: Attach Screenshot and Trace to Allure
+	    if (!result.isSuccess()) {
+	        // A. Capture Screenshot
+	        try {
+	            byte[] screenshot = page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
+	            Allure.addAttachment("Failure Screenshot", new ByteArrayInputStream(screenshot));
+	        } catch (Exception e) {
+	            LOGGER.warn("Failed to capture screenshot for Allure: " + e.getMessage());
+	        }
+	        
+	        // B. Capture Playwright Trace
+	        try {
+	            File tracesDir = new File("traces");
+	            if (!tracesDir.exists()) {
+	                tracesDir.mkdirs();
+	            }
+	            
+	            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	            java.nio.file.Path tracePath = Paths.get("traces/" + result.getName() + "_" + timestamp + ".zip");
+	            
+	            // Stop tracing and save to file
+	            context.tracing().stop(new Tracing.StopOptions().setPath(tracePath));
+	            LOGGER.info("Trace saved to: {}", tracePath.toAbsolutePath());
+	            
+	            // Attach Trace to Allure Report
+	            if (Files.exists(tracePath)) {
+	                Allure.addAttachment("Playwright Trace", "application/zip",
+	                    new ByteArrayInputStream(Files.readAllBytes(tracePath)), ".zip");
+	            }
+	        } catch (Exception e) {
+	            LOGGER.warn("Failed to save or attach Playwright Trace", e);
+	        }
+	    } else {
+	        // If test passed, just stop tracing without saving to free up memory
+	        context.tracing().stop();
+	    }
+
+	    // 2. Cloud Status Update Logic (Runs for BOTH Pass and Fail)
+	    // We check System Property first to ensure Jenkins/CLI overrides work
+	    String browserName = System.getProperty("browser");
+	    if (browserName == null) {
+	        browserName = ConfigReader.getProperty("browser");
+	    }
+
+	    if (browserName != null && browserName.equalsIgnoreCase("cloud")) {
+	        
+	        String status = result.getStatus() == ITestResult.SUCCESS ? "passed" : "failed";
+	        String reason = result.getThrowable() != null ? 
+	            result.getThrowable().getMessage() : "Test Completed Successfully";
+	        
+	        // Sanitize the reason to prevent JSON/JS injection or breaking the script
+	        if (reason != null) {
+	            reason = reason.replace("\"", "'")
+	                           .replace("\n", " ")
+	                           .replace("\r", " ");
+	            // Truncate if too long to avoid API limits
+	            if (reason.length() > 255) {
+	                reason = reason.substring(0, 252) + "...";
+	            }
+	        } else {
+	            reason = status.equals("passed") ? "Test Passed" : "Unknown Error";
+	        }
+	        
+	        if (page != null) {
+	            try {
+	                LOGGER.info("Updating LambdaTest status: {} - {}", status, reason);
+	                
+	                // TRANSMISSION: The "Magic Trick"
+	                // Pass status as argument to avoid syntax errors in the browser execution
+	                String action = "lambdatest_action: {\"action\": \"setTestStatus\", \"arguments\": {\"status\": \"" 
+	                        + status + "\", \"remark\": \"" + reason + "\"}}";
+	                
+	                page.evaluate("_ => {}", action);
+	                
+	                // WAIT: Allow cloud to process update before killing connection
+	                Thread.sleep(2000);
+	            
+	            } catch (Exception e) {
+	                 LOGGER.warn("Failed to update Cloud Dashboard status: " + e.getMessage());
+	            }
+	        }
+	    }
+
+	    // 3. Cleanup
+	    if (context != null) {
+	        LOGGER.info("Closing context for the method...");
+	        context.close();
+	    }
+	}
+	
+	
+	
+	/* This is the current method 
+	@AfterMethod
+	public void closeContext(ITestResult result) {
 		// IF FAILURE: Attach Screenshot to Allure
 		if (!result.isSuccess()) {
 			try {
@@ -280,6 +376,8 @@ public class BaseTest {
 			}
 		}
 	}
+	
+	*/
 
 	/**
 	 * Suite Teardown Runs once after all tests in the suite are complete. Closes
