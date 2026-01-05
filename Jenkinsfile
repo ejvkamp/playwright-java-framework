@@ -71,7 +71,9 @@ pipeline {
 	   properties: [],
 	   reportBuildPolicy: 'ALWAYS',
 	   // Must match the directory in pom.xml/allure.properties!
-	   results: [[path: 'target/allure-results']]
+	   results: [[path: 'target/allure-results']],
+	   // CRITICAL: Must match the Name configured in Step 2
+	   commandline: 'Allure' 
 	   ])
     }
   }
