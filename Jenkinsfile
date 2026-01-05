@@ -58,6 +58,7 @@ stage('Run Tests') {
   }
  }
 }
+ }
 
  post {
   always {
