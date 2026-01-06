@@ -28,3 +28,5 @@ allure-report/
 -jar
 src/test/resources/allure.properties
 .allure/
+
+mvn21.cmd

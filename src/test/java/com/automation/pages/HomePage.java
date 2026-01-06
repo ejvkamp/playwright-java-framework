@@ -85,4 +85,17 @@ public class HomePage {
         	searchBtn.click();
     		});
     	}
+    
+    public LoginPage navigateToLoginPage() {
+        return Allure.step("Navigate to Login Page", () -> {
+            // Hover the "My Account" dropdown
+        	page.getByRole(AriaRole.BUTTON, 
+              new Page.GetByRoleOptions().setName("My account")).hover(); 
+                
+            // Click the "Login" link (Using Bullseye Locator)
+            page.getByRole(AriaRole.LINK, 
+              new Page.GetByRoleOptions().setName("Login")).click();
+            return new LoginPage(page);
+        });
+    }
 }
