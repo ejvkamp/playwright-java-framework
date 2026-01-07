@@ -58,7 +58,6 @@ public class LoginPage {
 
 			// 2. Verify Success
 			assertTrue(myAccountHeading.isVisible(), "My Account header should be visible after login");
-			//AssertTrue(false, "Deliberate failure to test quality gate!");
 		});
 	}
 
