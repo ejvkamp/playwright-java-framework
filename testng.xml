@@ -6,4 +6,9 @@
   		<class name="com.automation.tests.MySecondPlaywrightTestPOM"/>
   	</classes>
   </test> <!-- Test -->
+  <test name="Hybrid Login Test">
+        <classes>
+            <class name="com.automation.tests.LoginTestHybrid"/>
+        </classes>
+    </test>
 </suite> <!-- Suite -->
