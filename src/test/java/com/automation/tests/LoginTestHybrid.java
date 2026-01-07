@@ -17,9 +17,6 @@ import org.testng.annotations.Test;
 @Epic("User Management")
 @Feature("Authentication")
 public class LoginTestHybrid extends BaseTest {
-	
-	// IGNORE THIS COMMENT - FOR TESTING ONLY
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginTestHybrid.class);
 
 	@Test(description = "Verify user can log in with account created via API")
@@ -45,13 +42,8 @@ public class LoginTestHybrid extends BaseTest {
 
 		User testUser = new User(firstName, lastName, email, phoneNumber, password);
 
-		// Report Visibility: Attach test data to the Allure Report Parameters section.
-		Allure.parameter("Email", email);
-		Allure.parameter("First Name", firstName);
-		Allure.parameter("Last Name", lastName);
-
 		// Log the identity, but NEVER the credentials.
-		LOGGER.info("Generated Test Data for User: {} {} ({})", firstName, lastName, email);
+		LOGGER.info("Generated Initial Test Data for User: {} {} ({})", firstName, lastName, email);
 
 		// "Magic Step": Create the user instantly via API
 		// Wrap in an Allure.step for reporting
@@ -61,6 +53,14 @@ public class LoginTestHybrid extends BaseTest {
 				apiService.registerUser(testUser);
 			}
 		});
+		
+		// Logging the final user details in case email changed
+		LOGGER.info("Registered User Identity for Login: {} {} ({})", testUser.getFirstName(),testUser.getLastName(), testUser.getEmail());
+		
+		// Report Visibility: Attach the final test data to the Allure Report Parameters section.
+		Allure.parameter("Email", testUser.getEmail());
+		Allure.parameter("First Name", testUser.getFirstName());
+		Allure.parameter("Last Name", testUser.getLastName());
 
 		// --- 2. ACT (UI) ---
 
@@ -79,7 +79,7 @@ public class LoginTestHybrid extends BaseTest {
 
 		// Step: Enter credentials
 		Allure.step("Act: Login via UI", () -> {
-			loginPage.login(email, password);
+			loginPage.login(testUser.getEmail(), password);
 		});
 
 		// --- 3. ASSERT (UI) ---
