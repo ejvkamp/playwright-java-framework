@@ -31,5 +31,3 @@ Open a terminal in the project root and run the command:
 * **To run the full regression suite:**
     `mvn test -DsuiteXmlFile=testng.xml`
 
-
-## TEMP FOR TESTING - TO BE DELETED
