@@ -189,7 +189,7 @@ public class MySecondPlaywrightTestOriginal {
  	Locator emptyCartMessage = page.locator("#content").getByText("Your shopping cart is empty!");
  	assertThat(emptyCartMessage).isVisible();
  	System.out.println("Assertion Passed: Cart is empty message is visible.");
-
+ 	
  	// ------------------- ACT (Continue) -------------------
  	System.out.println("Step 10c: Clicking the 'Continue' button");
  	page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Continue")).click();
@@ -198,7 +198,7 @@ public class MySecondPlaywrightTestOriginal {
  	browser.close();
  	playwright.close();
  	System.out.println("Test finished and resources cleaned up.");
-	}
+	} // end main
 	
 	// ... (This goes AFTER the 'main' method's closing brace '}' ) ...
 	/**

@@ -14,7 +14,7 @@ public class LoginPage {
 	private final Locator emailInput;
 	private final Locator passwordInput;
 	private final Locator loginBtn;
-
+	
 	// Outcome signals (Used for deterministic waiting)
 	private final Locator alertDanger;
 	private final Locator myAccountHeading;
@@ -24,8 +24,8 @@ public class LoginPage {
 		this.emailInput = page.getByLabel("E-Mail Address");
 		this.passwordInput = page.getByLabel("Password");
 		this.loginBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login"));
-
-		// Status Elements (For validation)
+		
+				// Status Elements (For validation)
 		this.alertDanger = page.locator(".alert-danger");
 		this.myAccountHeading = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("My Account"));
 	}
