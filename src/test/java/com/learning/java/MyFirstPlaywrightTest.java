@@ -16,7 +16,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 * Test Case ID:		TC-SHOPPING-001
 * Description: 		Verifies that a guest user can search, filter, add an item to the cart, and remove it.
 * Preconditions:	The practice website is available and the target product is in stock.
-* User Journey:		1. Search 'iPhone'. 2. Filter 'In Stock'. 3. Add first iPhone. 4. Verify success msg. 5. View cart. 6. Remove item. 7. Verify empty msg. 8. Continue.
+* User Journey:		1. Navigate to the practice website 2. Search 'iPhone'. 3. Filter 'In Stock'. 4. Add first iPhone. 5. Verify success msg. 6. View cart. 7. Remove item. 8. Verify empty msg. 9. Continue.
 * Expected Result:	The item should be added successfully and then removed successfully.
 * Author:			[Your Name]
 * Date:				[Current Date]
