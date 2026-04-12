@@ -4,6 +4,7 @@ import com.automation.models.FormData;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import java.util.List; 
 
 public class InputFormPage {
@@ -25,24 +26,30 @@ public class InputFormPage {
     
     public InputFormPage(Page page) {
         this.page = page;
-        this.nameInput = page.getByPlaceholder("Name", new Page.GetByPlaceholderOptions().setExact(true));
-        this.emailInput = page.getByPlaceholder("Email", new Page.GetByPlaceholderOptions().setExact(true));
-        this.passwordInput = page.getByPlaceholder("Password");
-        this.companyInput = page.getByPlaceholder("Company");
-        this.websiteInput = page.getByPlaceholder("Website");
-        this.countrySelect = page.locator("select[name='country']");
-        this.cityInput = page.getByPlaceholder("City");
-        this.address1Input = page.getByPlaceholder("Address 1");
-        this.address2Input = page.getByPlaceholder("Address 2");
-        this.stateInput = page.getByPlaceholder("State");
-        this.zipInput = page.getByPlaceholder("Zip Code");
+        
+        //Scope locators to use main form to avoid any strict mode errors
+        Locator mainForm = page.locator("#seleniumform");
+        
+        this.nameInput = mainForm.getByPlaceholder("Name");
+        this.emailInput = mainForm.getByPlaceholder("Email");
+        this.passwordInput = mainForm.getByPlaceholder("Password");
+        this.companyInput = mainForm.getByPlaceholder("Company");
+        this.websiteInput = mainForm.getByPlaceholder("Website");
+        this.countrySelect = mainForm.locator("select[name='country']");
+        this.cityInput = mainForm.getByPlaceholder("City");
+        this.address1Input = mainForm.getByPlaceholder("Address 1");
+        this.address2Input = mainForm.getByPlaceholder("Address 2");
+        this.stateInput = mainForm.getByPlaceholder("State");
+        this.zipInput = mainForm.getByPlaceholder("Zip Code");
         
         this.submitButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit"));
         this.successMessage = page.locator(".success-msg");
     }
     
     public void navigate() {
-    	 page.navigate("https://www.lambdatest.com/selenium-playground/input-form-demo");
+    	 page.navigate("https://www.testmuai.com/selenium-playground/input-form-demo");
+    	 //Add NETWORKIDLE to resolve errors due to timing 
+    	 page.waitForLoadState(LoadState.NETWORKIDLE);    	 
     	}
 
     	// The Professional Method: Takes a POJO instead of a list of strings

@@ -41,24 +41,24 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.javafaker</groupId>
-			<artifactId>javafaker</artifactId>
-			<version>1.0.2</version>
+			<groupId>net.datafaker</groupId>
+			<artifactId>datafaker</artifactId>
+			<version>2.5.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.10.1</version>
-    <scope>test</scope>
-</dependency>
-<!-- Allure Reporting Library -->
-<dependency>
-    <groupId>io.qameta.allure</groupId>
-    <artifactId>allure-testng</artifactId>
-    <version>2.27.0</version>
-    <scope>test</scope>
-</dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Allure Reporting Library -->
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-testng</artifactId>
+			<version>2.27.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -74,7 +74,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			    <!-- Maven Surefile Plugin (Executes Tests) -->
+				<!-- Maven Surefile Plugin (Executes Tests) -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.3.0</version>
@@ -85,29 +85,30 @@
 					</suiteXmlFiles>
 					<!-- Marks builds as failed instead of unstable -->
 					<testFailureIgnore>false</testFailureIgnore>
-					
+
 					<!-- CORRECT LISTENER CONFIGURATION -->
-				  	 <properties>
-				   	  <property>
-				    	   <name>usedefaultlisteners</name>
-				    	   <value>false</value>
-				   	  </property>
-				   	 <property>
-				    	 <name>listener</name>
-				    	  <value>io.qameta.allure.testng.AllureTestNg</value>
-				   	 </property>
-				  	</properties>
+					<properties>
+						<property>
+							<name>usedefaultlisteners</name>
+							<value>false</value>
+						</property>
+						<property>
+							<name>listener</name>
+							<value>io.qameta.allure.testng.AllureTestNg</value>
+						</property>
+					</properties>
 					<!-- Define Output Directory (Crucial for Clean Builds) -->
-        			<systemPropertyVariables>
-            			<allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-        			</systemPropertyVariables>
+					<systemPropertyVariables>
+						<allure.results.directory>
+							${project.build.directory}/allure-results</allure.results.directory>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>
-			    <!-- Allure Maven Plugin (Views Reports) -->
+				<!-- Allure Maven Plugin (Views Reports) -->
 				<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-maven</artifactId>
-			<version>2.12.0</version>
+				<artifactId>allure-maven</artifactId>
+				<version>2.12.0</version>
 			</plugin>
 		</plugins>
 	</build>

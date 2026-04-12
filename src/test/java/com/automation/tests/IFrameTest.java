@@ -11,7 +11,7 @@ public class IFrameTest extends BaseTest {
 	@Test
 	public void interactWithIFrame() {
 		// 1. Navigate to the real-world demo
-		page.navigate("https://www.lambdatest.com/selenium-playground/iframe-demo");
+		page.navigate("https://www.testmuai.com/selenium-playground/iframe-demo");
 
 		// 2. Locate the Frame itself ("The play within a play")
 		// We find the <iframe> element by its ID

@@ -1,6 +1,6 @@
 package com.automation.utils;
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import com.automation.models.FormData;
 import java.util.Locale;
 
@@ -24,7 +24,7 @@ public static FormData createValidData(String country) {
  // Use safeEmailAddress() to avoid domains that some apps reject
  String email = faker.internet().safeEmailAddress(); 
         
- String password = faker.internet().password(8, 16, true, true);
+ String password = faker.credentials().password(8, 16, true, true, true);
  String company = faker.company().name();
  String website = faker.internet().url();
         

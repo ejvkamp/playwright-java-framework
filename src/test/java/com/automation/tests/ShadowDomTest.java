@@ -10,7 +10,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ShadowDomTest extends BaseTest {
 
-private static final String SHADOW_DOM_URL = "https://www.lambdatest.com/selenium-playground/shadow-dom";
+private static final String SHADOW_DOM_URL = "https://www.testmuai.com/selenium-playground/shadow-dom";
 
 @BeforeMethod
 public void navigateToShadowDemo() {
@@ -39,8 +39,6 @@ Locator emailInput = page.getByRole(AriaRole.TEXTBOX,
             
  emailInput.fill("tester@example.com");
  
- page.pause();
-        
  assertThat(emailInput).hasValue("tester@example.com");
         
  System.out.println("Successfully pierced the Shadow DOM!");
