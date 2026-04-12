@@ -5,7 +5,7 @@ import com.automation.models.User;
 import com.automation.pages.HomePage;
 import com.automation.pages.LoginPage;
 import com.automation.utils.APIService;
-import com.github.javafaker.Faker;
+import net.datafaker.Faker; 
 import io.qameta.allure.*;
 import io.qameta.allure.testng.AllureTestNg;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class LoginTestHybrid extends BaseTest {
 		String email = faker.internet().emailAddress();
 		// Parameters: minLength(10), maxLength(20), includeUppercase, includeSpecial,
 		// includeDigit
-		String password = faker.internet().password(10, 20, true, true, true);
+		String password = faker.credentials().password(10, 20, true, true, true);
 
 		// Data Stability: Use strictly numeric phone numbers to avoid locale formatting
 		// issues.
