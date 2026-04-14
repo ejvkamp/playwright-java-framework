@@ -20,7 +20,7 @@ public class GeolocationTest extends BaseTest {
 	public Object[][] locations() {
 		return new Object[][] { 
 			{ 40.7128, -74.0060, "New York" }, 
-			{ 48.8566, 2.3522, "Paris" },
+			{ 41.0082, 28.9784, "Istanbul" },
 			{ 35.6762, 139.6503, "Tokyo" } };
 	}
 
@@ -29,7 +29,7 @@ public class GeolocationTest extends BaseTest {
 		System.out.println("Testing from: " + city + " [" + lat + ", " + lng + "]");
 
 		// 1. Configure Context with Location & Permissions
-		// We assume we are on a mobile device (iPhone 13 dimensions)
+		// We assume we are on a mobile device (iPhone 14 Pro Max dimensions)
 		mobileContext = browser.newContext(
 				new Browser.NewContextOptions().setViewportSize(390, 844).setGeolocation(new Geolocation(lat, lng))
 						// Auto-accept the permission prompt

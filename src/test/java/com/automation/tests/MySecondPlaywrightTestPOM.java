@@ -18,16 +18,22 @@ import io.qameta.allure.testng.AllureTestNg;
 
 
 /**
- * Test Case ID: TC-PRICE-001 Title: Verify Cart Total Calculation Description:
- * Verifies that the total price is calculated correctly in the shopping cart.
- * Sub-System: Shopping Cart Priority: P1 (Critical) Traceability: [Link to
- * Ticket or REQ ID] Preconditions: The practice website is available. The
- * "MacBook Pro" product must be in stock. User Journey: Navigate to Product
- * Category, Filter by Price Slider , Filter “In Stock”, Click “MacBook Pro”,
- * Update Qty to 5, Add to cart, View Cart, Verify Total, Remove Item, Continue
- * to Homepage Expected Result: The total price in the cart must match the unit
- * price multiplied by the quantity. Author: [Your Name] Date: [Current Date]
- **/
+ * Test Case ID:      	TC-PRICE-001
+ * Description:       	Verifies that the total price is calculated 
+ * 						correctly in the shopping cart.
+ * Preconditions:     	The practice website is available. 
+ * 						The "MacBook Pro" product must be in stock.
+ * User Journey:      	Navigate to the test website, Search for  
+ *						product, Filter by Price Slider , 
+ * 						Filter “In Stock”, Click “MacBook Pro”, Update 
+ * 						Qty to 5, Add to cart, View Cart, Verify Total, 
+ * 						Remove Item, Continue to Homepage 
+ * Expected Result:   	The total price in the cart must match the 
+ * 						unit price multiplied by the quantity.
+ * Author: 				[Your Name] 
+ * Date: 				[Current Date]
+**/
+
 
 // Triggering CI build
 

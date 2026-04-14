@@ -17,13 +17,12 @@ public class MobileLayoutTest extends BaseTest {
 
 	@Test
 	public void verifyMobileMenuOniPhone() {
-		// 1. Configure the Context for iPhone 13
-		// Note: Playwright Java does not have a built-in device dictionary like Node.js
+		// 1. Configure the Context for iPhone 14 Pro Max
 		// We must manually set the Viewport, User Agent, and Screen settings.
-		Browser.NewContextOptions options = new Browser.NewContextOptions().setViewportSize(390, 844) // iPhone 13 width x height
+		Browser.NewContextOptions options = new Browser.NewContextOptions().setViewportSize(430, 932) // iPhone 14 Pro Max width x height
 				.setDeviceScaleFactor(3.0) // Pixel density (DPR)
 				.setIsMobile(true).setHasTouch(true).setUserAgent(
-						"Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1");
+						"Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1");
 
 		// 2. Launch a New Context with Device Emulation
 		mobileContext = browser.newContext(options);
@@ -51,7 +50,7 @@ public class MobileLayoutTest extends BaseTest {
 		assertThat(mobilePage.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Shop by Category")))
 				.isVisible();
 
-		System.out.println("Verified mobile layout for iPhone 13");
+		System.out.println("Verified mobile layout for iPhone 14 Pro Max");
 	}
 
 	@AfterMethod

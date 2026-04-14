@@ -123,9 +123,7 @@ public class MockingTest extends BaseTest {
       // Log the method and URL
       System.out.println(">> Network Request: " + route.request().method() + " " + route.request().url());
       
-      // Critical: Use fallback() to tell Playwright 
-      // "I'm done, handle this request normally."
-      // This is safer than resume() for simple spying.
+      // Allow the request to proceed normally after logging
       route.fallback(); 
      });
      
