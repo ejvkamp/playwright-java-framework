@@ -32,7 +32,7 @@ public class ResponsiveLayoutTest extends BaseTest {
 		if (page != null) {
 			page.setViewportSize(width, height);
 		}
-
+		
 		// 3. Navigate
 		page.navigate("https://ecommerce-playground.lambdatest.io/");
 

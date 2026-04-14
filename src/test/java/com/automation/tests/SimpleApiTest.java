@@ -62,10 +62,15 @@ public class SimpleApiTest {
 
 		System.out.println("JSON response is: " + body);
 
-		/*
-		 * Expected Response Structure from JSONPlaceholder: { "id": 1, "name":
-		 * "Leanne Graham", "username": "Bret", "email": "Sincere@april.biz", ... }
-		 */
+		 /* Expected Response Structure from JSONPlaceholder:
+		   * {
+		   * "id": 1,
+		   * "name": "Leanne Graham",
+		   * "username": "Bret",
+		   * "email": "Sincere@april.biz",
+		   * ...
+		   * }
+		   */
 
 		// Parse JSON using Gson
 		JsonObject jsonResponse = JsonParser.parseString(body).getAsJsonObject();
@@ -96,13 +101,20 @@ public class SimpleApiTest {
 		System.out.println("Correctly received 404 Not Found.");
 	}
 
-	/*
-	 * Expected Request: { "title": "API Testing with Playwright", "body":
-	 * "Learn how to create test data instantly via API", "userId": 1 } Expected
-	 * Response from JSONPlaceholder: { "title": "API Testing with Playwright",
-	 * "body": "Learn how to create test data instantly via API", "userId": 1, "id":
-	 * 101 // Always 101 for new posts on this mock API }
-	 */
+	/* Expected Request:
+	{
+	    "title": "API Testing with Playwright",
+	    "body": "Learn how to create test data instantly via API",
+	    "userId": 1
+	}
+	Expected Response from JSONPlaceholder:
+	{
+	    "title": "API Testing with Playwright",
+	    "body": "Learn how to create test data instantly via API",
+	    "userId": 1,
+	    "id": 101  // Always 101 for new posts on this mock API
+	}
+	*/
 
 	@Test
 	public void createNewPost() {
@@ -175,8 +187,8 @@ public class SimpleApiTest {
 		APIResponse getResponse = apiContext.get("/posts/1");
 		Assert.assertEquals(getResponse.status(), 200);
 
-		// 3. Update (PUT) - Coming in Phase 3
-		// 4. Delete (DELETE) - Coming in Phase 4
+		// 3. Update (PUT) - Coming in Part 3
+		// 4. Delete (DELETE) - Coming in Part 4
 	}
 
 	@AfterClass

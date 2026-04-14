@@ -279,10 +279,12 @@ public class BaseTest {
 	}
 	
 
+
 	/**
 	 * Suite Teardown Runs once after all tests in the suite are complete. Closes
 	 * the Playwright engine and browser process to clean up resources.
 	 */
+
 	@AfterSuite
 	public void stopPlaywright() {
 		if (playwright != null) {
@@ -290,6 +292,7 @@ public class BaseTest {
 			playwright.close();
 		}
 	}
+	
 
 	/**
 	 * Accessibility Check Scans the current page for accessibility violations using
