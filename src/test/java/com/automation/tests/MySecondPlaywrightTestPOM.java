@@ -32,7 +32,7 @@ import io.qameta.allure.testng.AllureTestNg;
  * 						unit price multiplied by the quantity.
  * Author: 				[Your Name] 
  * Date: 				[Current Date]
-**/
+*/
 
 
 // Triggering CI build

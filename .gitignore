@@ -30,3 +30,5 @@ src/test/resources/allure.properties
 .allure/
 
 mvn21.cmd
+
+git-cleanup.bat

@@ -38,16 +38,25 @@ import java.nio.file.Files;
 
 
 /**
- * ------------------------------------------------------------------ Class
- * Name: BaseTest Description: The foundational class for all UI tests. It
- * manages the lifecycle of the Playwright objects (Browser, Context, Page)
- * using TestNG annotations. Responsibilities: 1. Suite Setup: Initializes
- * Playwright and the Browser (driven by config) 2. Test Setup: Creates a fresh
- * BrowserContext and Page for every @Test 3. Teardown: Closes resources after
- * tests/suite execution. * Configuration: Reads 'browser' and 'headless'
- * settings * from config.properties Author: [Your Name] Date: [Current Date]
+ * ------------------------------------------------------------------
+ * Class Name:      	BaseTest
+ * Description:     	The foundational class for all UI tests. 
+ * 						It manages the lifecycle of the Playwright 
+ *						objects (Browser, Context, Page) using 
+ * 						TestNG annotations.
+ * Responsibilities:
+ * 1. Suite Setup:    	Initializes Playwright and the Browser 
+ * 						(driven by config)
+ * 2. Test Setup:     	Creates a fresh BrowserContext and Page 
+ * 						for every @Test
+ * 3. Teardown:       	Closes resources after tests/suite execution.
+ * * Configuration:   	Reads 'browser' and 'headless' settings 
+ * * 					from config.properties
+ * Author:            	[Your Name]
+ * Date:              	[Current Date]
  * -------------------------------------------------------------------
- */
+*/
+
 
 public class BaseTest {
 	// Suite-Level Objects (Static: shared once per run)
@@ -308,11 +317,11 @@ public class BaseTest {
 		AxeResults accessibilityScanResults = axeBuilder.analyze();
 
 		if (accessibilityScanResults.getViolations().isEmpty()) {
-			// System.out.println("✓ No accessibility violations found");
+			// System.out.println("No accessibility violations found");
 			LOGGER.info("✓ No accessibility violations found");
 		} else {
 			// System.out.println("!!! ACCESSIBILITY VIOLATIONS FOUND !!!");
-			// System.out.println("✗ Found " +
+			// System.out.println("Found " +
 			// accessibilityScanResults.getViolations().size() + " violations:");
 			LOGGER.error("!!! ACCESSIBILITY VIOLATIONS FOUND !!!");
 			LOGGER.error("Found {} violations:", accessibilityScanResults.getViolations().size());

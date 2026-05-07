@@ -47,7 +47,7 @@ public class InputFormPage {
     }
     
     public void navigate() {
-    	 page.navigate("https://www.testmuai.com/selenium-playground/input-form-demo");
+    	 page.navigate("https://www.testmuaiplayground.com/input-form-demo/");
     	 //Add NETWORKIDLE to resolve errors due to timing 
     	 page.waitForLoadState(LoadState.NETWORKIDLE);    	 
     	}
