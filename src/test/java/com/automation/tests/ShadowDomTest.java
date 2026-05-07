@@ -10,7 +10,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ShadowDomTest extends BaseTest {
 
-private static final String SHADOW_DOM_URL = "https://www.testmuai.com/selenium-playground/shadow-dom";
+private static final String SHADOW_DOM_URL = "https://www.testmuaiplayground.com/shadow-dom/";
 
 @BeforeMethod
 public void navigateToShadowDemo() {

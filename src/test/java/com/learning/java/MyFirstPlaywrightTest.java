@@ -88,7 +88,7 @@ public class MyFirstPlaywrightTest {
 		// ------------------- ACT (View Cart and Remove) -------------------
 		System.out.println("Step 6a: Navigating to the shopping cart");
 		page.getByText("View Cart").click();
-
+		
 		// Using getByTitle as identified in Phase 2
 		System.out.println("Step 6b: Removing the item from the cart");
 		page.getByTitle("Remove").click();

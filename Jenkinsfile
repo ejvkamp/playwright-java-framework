@@ -5,7 +5,7 @@ pipeline {
   // Critical: These names must EXACTLY match the "Name" field in 
   // Manage Jenkins > Global Tool Configuration
    maven 'Maven' 
-   jdk 'JDK-21'
+   jdk 'JDK-25'
  }
 
  stages {

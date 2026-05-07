@@ -6,12 +6,10 @@ import java.util.Locale;
 
 public class TestDataFactory {
  // One Faker instance to rule them all
- // We use US locale to ensure phone/zip formats match 
- // the expected format
+ // We use US locale to ensure phone/zip formats match the expected format
  private static final Faker faker = new Faker(Locale.US);
 
- // Generates a FormData object with random details 
- // and a default country.
+ // Generates a FormData object with random details and a default country.
  public static FormData createValidData() {
   return createValidData("United States");
  }

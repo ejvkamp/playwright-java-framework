@@ -11,20 +11,20 @@ public class IFrameTest extends BaseTest {
 	@Test
 	public void interactWithIFrame() {
 		// 1. Navigate to the real-world demo
-		page.navigate("https://www.testmuai.com/selenium-playground/iframe-demo");
+		page.navigate("https://www.testmuaiplayground.com/iframe-demo/");
 
 		// 2. Locate the Frame itself ("The play within a play")
 		// We find the <iframe> element by its ID
 		FrameLocator editorFrame = page.frameLocator("#iFrame1");
 
 		// 3. Locate elements INSIDE the frame
-		// The text editor body is inside the frame.
+		// The text editor body is inside the frame
 		// We use this CSS attribute selector because the editor doesn't use
-		// a standard input field - it's a div with contenteditable attribute
+		// a standard input field it's a div with contenteditable attribute
 		Locator editorInput = editorFrame.locator("[contenteditable=true]");
 
 		// 4. Interact as normal
-		// The editor has default text. We click to focus, clear, and type.
+		// The editor has default text so we click to focus, clear, and type
 		editorInput.click();
 		editorInput.clear();
 		editorInput.fill("Hello from Playwright! This text is inside an iFrame.");

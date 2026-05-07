@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import java.lang.Math;
+//import java.lang.Math;
 
 public class CartPage {
   private final Page page;
