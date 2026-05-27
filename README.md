@@ -1,4 +1,4 @@
-# Playwright Automation Framework for the LambdaTest Playground Website
+# Playwright Automation Framework for the TestMu AI Playground Website
 
 This repository contains the automated end-to-end test suite for the TestMu AI Playground e-commerce website, built with Playwright for Java, TestNG, and Maven.
 
