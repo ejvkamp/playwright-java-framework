@@ -32,8 +32,7 @@ public class LoginTestHybrid extends BaseTest {
 		String firstName = faker.name().firstName();
 		String lastName = faker.name().lastName();
 		String email = faker.internet().emailAddress();
-		// Parameters: minLength(10), maxLength(20), includeUppercase, includeSpecial,
-		// includeDigit
+		// Parameters: minLength(10), maxLength(20), includeUppercase, includeSpecial, includeDigit
 		String password = faker.credentials().password(10, 20, true, true, true);
 
 		// Data Stability: Use strictly numeric phone numbers to avoid locale formatting
