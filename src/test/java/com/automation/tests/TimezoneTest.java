@@ -11,18 +11,19 @@ public class TimezoneTest extends BaseTest {
 
 	@Test
 	public void verifyTimezoneHandling() {
-		// 1. Set timezone to Tokyo (UTC+9)
-		BrowserContext tzContext = browser.newContext(new Browser.NewContextOptions().setTimezoneId("Asia/Tokyo"));
+		// Set timezone to Istanbul (UTC/GMT+3)
+		BrowserContext tzContext = browser.newContext(new Browser.NewContextOptions().setTimezoneId("Europe/Istanbul"));
 
-		Page tzPage = tzContext.newPage();
+		try {
+			Page tzPage = tzContext.newPage();
 
-		// 2. We’ll query the browser engine directly
-		// 3. Assert the browser reports the correct timezone via JavaScript
-		String timezone = (String) tzPage.evaluate("() => Intl.DateTimeFormat().resolvedOptions().timeZone");
+			// Verify the browser reports the correct timezone via JavaScript
+			String timezone = (String) tzPage.evaluate("() => Intl.DateTimeFormat().resolvedOptions().timeZone");
 
-		System.out.println("Browser thinks it is in: " + timezone);
-		Assert.assertEquals(timezone, "Asia/Tokyo", "Browser timezone did not match expected value!");
-
-		tzContext.close();
+			System.out.println("Browser thinks it is in: " + timezone);
+			Assert.assertEquals(timezone, "Europe/Istanbul", "Browser timezone did not match expected value!");
+		} finally {
+			tzContext.close();
+		}
 	}
 }

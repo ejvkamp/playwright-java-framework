@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="ParameterizedTestSuite">
+    <test name="RunOnFirefox">
+        <!-- Define parameters for this test run -->
+        <parameter name="browser" value="firefox"/>
+        <parameter name="appURL" 
+           value="https://ecommerce-playground.lambdatest.io/"/>
+        <classes>
+            <class name="com.automation.tests.ParameterizedTest"/>
+        </classes>
+    </test>
+</suite>

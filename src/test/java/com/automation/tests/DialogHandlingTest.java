@@ -1,6 +1,7 @@
 package com.automation.tests;
 
 import com.automation.base.BaseTest;
+import com.microsoft.playwright.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -12,7 +13,11 @@ public class DialogHandlingTest extends BaseTest {
 
 	// Helper method to get the local file path
 	private String getTestPageUrl() {
-		return getClass().getClassLoader().getResource("test-dialogs.html").toString();
+		java.net.URL resourceUrl = getClass().getClassLoader().getResource("test-dialogs.html");
+		if (resourceUrl == null) {
+			throw new IllegalStateException("File not found! Confirm it exists in classpath.");
+		}
+		return resourceUrl.toString();
 	}
 
 	@Test
@@ -48,10 +53,11 @@ public class DialogHandlingTest extends BaseTest {
 		page.navigate(getTestPageUrl()); // Always navigate first!
 
 		// We execute the JavaScript confirm() function directly in the browser
-		// Playwright auto-dismisses it (returns false) unless we set a handler
+		// Playwright auto-dismisses it unless we set a handler
 		Object userChoice = page.evaluate("() => confirm('Delete?')");
 
-		LOGGER.info("User chose: {}", userChoice); // Prints 'false' (auto-dismissed)
+		// Prints 'false' (auto-dismissed)
+		LOGGER.info("User chose: {}", userChoice); 
 	}
 
 	@Test
@@ -69,18 +75,21 @@ public class DialogHandlingTest extends BaseTest {
 
 	@Test
 	public void handleBeforeUnload() {
-		page.navigate(getTestPageUrl()); // Always navigate first!
+	    page.navigate(getTestPageUrl());
+	    
+	    page.onDialog(dialog -> {
+	        if (dialog.type().equals("beforeunload")) {
+	            LOGGER.info("Handling beforeunload dialog");
+	            dialog.accept(); // Allow navigation
+	        } else {
+	        	dialog.accept(); // Dismiss the alert we click below
+	        }
+	    });
+	    
+	 	// Need user-activation to trigger beforeunload
+	    page.click("#alert");
 
-		// This listener acts as insurance.
-		// In this specific test, the dialog likely won't appear (browsers suppress it),
-		// but in a complex app, this code ensures the test doesn't hang.
-		page.onDialog(dialog -> {
-			if (dialog.type().equals("beforeunload")) {
-				LOGGER.info("Handling beforeunload dialog");
-				dialog.accept(); // Allow navigation
-			}
-		});
-
+	    // Need to add close with beforeunload options to fire
+	    page.close(new Page.CloseOptions().setRunBeforeUnload(true));
 	}
-
-}
+} 

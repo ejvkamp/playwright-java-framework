@@ -15,19 +15,19 @@ public class InputFormStaticTest extends BaseTest {
 public void verifyFormWithStaticData() {
  // 1. Arrange: Create the "Prop" manually (Hardcoded for now)
  // Note: "United States" must match the dropdown text exactly!
- FormData staticData = new FormData(
-	"John Doe", 
-	"john.doe@example.com", 
-	"password123", 
-	"Acme Corp", 
-	"https://www.google.com", 
-	"United States", 
-	"New York", 
-	"123 Main St", 
-	"Apt 4B", 
-	"NY", 
-	"10001"
-  );
+ FormData staticData = new FormData.Builder()
+		 .withName("John Doe")
+		 .withEmail("john.doe@example.com")
+		 .withPassword("password123")
+		 .withCompany("Acme Corp")
+		 .withWebsite("https://www.google.com")
+		 .withCountry("United States")
+		 .withCity("New York")
+		 .withAddress1("123 Main St")
+		 .withAddress2("Apt 4B")
+		 .withState("NY")
+		 .withZipCode("10001")
+		 .build();
  
  InputFormPage inputPage = new InputFormPage(page);
 

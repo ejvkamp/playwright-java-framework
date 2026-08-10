@@ -22,11 +22,13 @@ public class IFrameTest extends BaseTest {
 		// We use this CSS attribute selector because the editor doesn't use
 		// a standard input field it's a div with contenteditable attribute
 		Locator editorInput = editorFrame.locator("[contenteditable=true]");
-
+		
+		// Validate frame is ready for interaction using assertion
+		assertThat(editorInput).isVisible(); 
+		 
 		// 4. Interact as normal
 		// The editor has default text so we click to focus, clear, and type
 		editorInput.click();
-		editorInput.clear();
 		editorInput.fill("Hello from Playwright! This text is inside an iFrame.");
 
 		// 5. Verify the interaction

@@ -1,32 +1,62 @@
 package com.automation.models;
 
-public class FormData {
+public final class FormData {
 	
-	private String name;
-    private String email;
-    private String password;
-    private String company;
-    private String website;
-    private String country;
-    private String city;
-    private String address1;
-    private String address2;
-    private String state;
-    private String zipCode;
+	private final String name;
+    private final String email;
+    private final String password;
+    private final String company;
+    private final String website;
+    private final String country;
+    private final String city;
+    private final String address1;
+    private final String address2;
+    private final String state;
+    private final String zipCode;
 
     
-    public FormData(String name, String email, String password, String company, String website, String country, String city, String address1, String address2, String state, String zipCode) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.company = company;
-        this.website = website;
-        this.country = country;
-        this.city = city;
-        this.address1 = address1;
-        this.address2 = address2;
-        this.state = state;
-        this.zipCode = zipCode;
+    private FormData(Builder build) {
+        this.name = build.name;
+        this.email = build.email;
+        this.password = build.password;
+        this.company = build.company;
+        this.website = build.website;
+        this.country = build.country;
+        this.city = build.city;
+        this.address1 = build.address1;
+        this.address2 = build.address2;
+        this.state = build.state;
+        this.zipCode = build.zipCode;
+    }
+    
+    public static class Builder {
+        private String name;
+        private String email;
+        private String password;
+        private String company;
+        private String website;
+        private String country;
+        private String city;
+        private String address1;
+        private String address2;
+        private String state;
+        private String zipCode;
+
+        public Builder withName(String name) { this.name = name; return this; }
+        public Builder withEmail(String email) { this.email = email; return this; }
+        public Builder withPassword(String password) { this.password = password; return this; }
+        public Builder withCompany(String company) { this.company = company; return this; }
+        public Builder withWebsite(String website) { this.website = website; return this; }
+        public Builder withCountry(String country) { this.country = country; return this; }
+        public Builder withCity(String city) { this.city = city; return this; }
+        public Builder withAddress1(String address1) { this.address1 = address1; return this; }
+        public Builder withAddress2(String address2) { this.address2 = address2; return this; }
+        public Builder withState(String state) { this.state = state; return this; }
+        public Builder withZipCode(String zipCode) { this.zipCode = zipCode; return this; }
+
+        public FormData build() {
+            return new FormData(this);
+        }
     }
     
     public String getName() { return name; }

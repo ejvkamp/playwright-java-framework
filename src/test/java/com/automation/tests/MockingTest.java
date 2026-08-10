@@ -26,7 +26,9 @@ public class MockingTest extends BaseTest {
             "</li>";
 
         // 2. Set up the Interception (Stubbing)
-        page.route("**/index.php?route=extension/maza/product/product/autocomplete**", route -> {
+        String pattern = "**/index.php?route=extension/maza/product/product/autocomplete**";
+
+        page.route(pattern, route -> {
             String url = route.request().url();
             
             // Strategic Mocking: Only intercept if it matches our specific test case input.
@@ -80,6 +82,9 @@ public class MockingTest extends BaseTest {
         assertThat(resultItem.locator("img")).isVisible();
         
         System.out.println(">>> Mock Test Passed: UI displayed fake product structure correctly.");
+        
+        //Clean-up route handler
+        page.unroute(pattern);
     }
     
     @Test
@@ -137,9 +142,5 @@ public class MockingTest extends BaseTest {
      // subsequent tests
      page.unroute(pattern);
     }
-
-
-
-    
     
 }
