@@ -7,6 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<suiteXmlFile>testng.xml</suiteXmlFile>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -81,7 +82,7 @@
 				<!-- Check for the latest version -->
 				<configuration>
 					<suiteXmlFiles>
-						<suiteXmlFile>testng.xml</suiteXmlFile>
+						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
 					</suiteXmlFiles>
 					<!-- Marks builds as failed instead of unstable -->
 					<testFailureIgnore>false</testFailureIgnore>

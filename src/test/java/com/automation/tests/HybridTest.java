@@ -15,7 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class HybridTest extends BaseTest {
-
+	
 	private APIRequestContext apiContext;
 
 	@BeforeClass
@@ -34,10 +34,13 @@ public class HybridTest extends BaseTest {
 		try {
 			// 1. API Call: Get User ID 1
 			APIResponse response = apiContext.get("/users/1");
-			Assert.assertEquals(response.status(), 200);
+			if (response.status() != 200) {
+				throw new RuntimeException("API returned unexpected status: " + response.status());
+			}
 
 			// 2. Parse JSON
 			JsonObject json = JsonParser.parseString(response.text()).getAsJsonObject();
+			response.dispose();
 
 			/*
 			 * API Response Structure -> FormData Mapping: json.name -> fullName json.email
@@ -51,13 +54,20 @@ public class HybridTest extends BaseTest {
 			String website = json.get("website").getAsString();
 			String companyName = json.get("company").getAsJsonObject().get("name").getAsString();
 
-			// Create the object (Filling in blanks with defaults as needed)
-			userData = new FormData(fullName, email, "Password123!", // Default password
-					companyName, website, "United States",
-					json.get("address").getAsJsonObject().get("city").getAsString(),
-					json.get("address").getAsJsonObject().get("street").getAsString(),
-					json.get("address").getAsJsonObject().get("suite").getAsString(), "NY", // Default State
-					json.get("address").getAsJsonObject().get("zipcode").getAsString());
+			// Build the object (Filling in blanks with defaults as needed)
+			userData = new FormData.Builder()
+			        .withName(fullName)
+			        .withEmail(email)
+			        .withPassword("Password123!") // Default password
+			        .withCompany(companyName)
+			        .withWebsite(website)
+			        .withCountry("United States")
+			        .withCity(json.get("address").getAsJsonObject().get("city").getAsString())
+			        .withAddress1(json.get("address").getAsJsonObject().get("street").getAsString())
+			        .withAddress2(json.get("address").getAsJsonObject().get("suite").getAsString())
+			        .withState("NY") // Default State
+			        .withZipCode(json.get("address").getAsJsonObject().get("zipcode").getAsString())
+			        .build();
 
 		} catch (Exception e) {
 			// Fallback: If API fails, use Faker so test can still proceed
@@ -80,7 +90,7 @@ public class HybridTest extends BaseTest {
 				"Form submission failed for user: " + userData.getName());
 
 		System.out.println("Hybrid test completed successfully!");
-
+		
 	} // end of registerUserFromApiData
 
 	@AfterClass

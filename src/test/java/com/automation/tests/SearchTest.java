@@ -65,7 +65,7 @@ public class SearchTest extends BaseTest {
 	home.navigate();
 
 	// --- ACT ---
-	// We use the new search() method we added to HomePage in Phase 2
+	// We use the new search() method we added to HomePage in Part 2
 	home.search(searchTerm);
 	
 	// --- ASSERT ---
@@ -82,7 +82,7 @@ public class SearchTest extends BaseTest {
 	assertThat(productTitle).isVisible();
 	LOGGER.info("Product found successfully.");
 	} else {
-	// For "Unicorn", this assertion will FAIL, triggering our Trace Viewer
+	// "Unicorn" will FAIL and trigger our Trace Viewer
 	// This is intentional to demonstrate debugging a specific data row!
 	LOGGER.info("Attempting to verify non-existent product to trigger Trace...");
 	assertThat(productTitle).isVisible(); 

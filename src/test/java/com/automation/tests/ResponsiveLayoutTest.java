@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertFalse;
 
+import java.util.List;
+
 public class ResponsiveLayoutTest extends BaseTest {
 
 // 1. Define Standard Breakpoints & Edge Cases
@@ -51,13 +53,18 @@ public class ResponsiveLayoutTest extends BaseTest {
 
 		// 5. Professional Check: Horizontal Scroll
 		// A responsive page should NEVER have a horizontal scrollbar on the body.
-		boolean hasHorizontalScroll = (boolean) page
-				.evaluate("document.documentElement.scrollWidth > window.innerWidth");
+		@SuppressWarnings("unchecked")
+		List<Object> scrollData = (List<Object>) page.evaluate("() => [document.documentElement.scrollWidth, window.innerWidth]");
 
-		assertFalse(hasHorizontalScroll, "Page has horizontal scroll at " + width + "px (Responsive Failure)");
+		int scrollWidth = ((Number) scrollData.get(0)).intValue();
+		int innerWidth = ((Number) scrollData.get(1)).intValue();
+		boolean hasHorizontalScroll = scrollWidth > innerWidth;
 
+		assertFalse(hasHorizontalScroll, "Page has horizontal scroll at " + width + "px "
+			        + "(scrollWidth: " + scrollWidth + ", innerWidth: " + innerWidth
+			        + ", overflow: " + (scrollWidth - innerWidth) + "px)");
 	}
-
+	
 	@Test
 	public void discoverBreakpoints() {
 		// Navigate once at the beginning

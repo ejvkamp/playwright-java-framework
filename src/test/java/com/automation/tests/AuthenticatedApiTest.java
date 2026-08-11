@@ -72,6 +72,8 @@ public class AuthenticatedApiTest {
 		Assert.assertEquals(json.get("title").getAsString(), "Updated Title by Playwright");
 
 		System.out.println("Update successful: " + json.get("title").getAsString());
+		
+		response.dispose();
 	}
 
 	@Test(priority = 2)
@@ -95,6 +97,8 @@ public class AuthenticatedApiTest {
 		Assert.assertTrue(json.has("body"), "Body field should remain");
 
 		System.out.println("Patch successful.");
+		
+		response.dispose();
 	}
 
 	@Test(priority = 3)
@@ -110,6 +114,8 @@ public class AuthenticatedApiTest {
 		Assert.assertTrue(status == 200 || status == 204, "Expected 200 or 204, got: " + status);
 
 		System.out.println("Delete successful. Status: " + status);
+		
+		response.dispose();
 	}
 
 	@Test
@@ -127,6 +133,7 @@ public class AuthenticatedApiTest {
 		// Assert.assertEquals(response.status(), 401);
 		// Uncomment for real API
 
+		response.dispose();
 		unauthorizedContext.dispose();
 	}
 
@@ -140,15 +147,18 @@ public class AuthenticatedApiTest {
 
 		APIResponse created = apiContext.post("/posts", RequestOptions.create().setData(newPost));
 		Assert.assertEquals(created.status(), 201);
+		created.dispose();
 
 		// 2. Update (using the mock ID)
 		newPost.put("title", "Updated Lifecycle Test");
 		APIResponse updated = apiContext.put("/posts/1", RequestOptions.create().setData(newPost));
 		Assert.assertEquals(updated.status(), 200);
+		updated.dispose();
 
 		// 3. Delete
 		APIResponse deleted = apiContext.delete("/posts/1");
 		Assert.assertTrue(deleted.status() == 200 || deleted.status() == 204);
+		deleted.dispose();
 
 		System.out.println("Complete lifecycle executed successfully");
 	}

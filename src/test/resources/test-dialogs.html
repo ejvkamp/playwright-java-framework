@@ -5,5 +5,11 @@
     <button id="alert" onclick="alert('Hello Playwright!')">Show Alert</button>
     <button id="confirm" onclick="confirm('Delete item?')">Show Confirm</button>
     <button id="prompt" onclick="prompt('Enter name:', 'Default')">Show Prompt</button>
+	<script>
+	        window.addEventListener('beforeunload', function (event) {
+	            event.preventDefault();
+	            event.returnValue = ''; // Required by Chrome to trigger the dialog
+	        });
+	 </script>
 </body>
 </html>

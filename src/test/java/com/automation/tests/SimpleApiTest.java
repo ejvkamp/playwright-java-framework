@@ -87,6 +87,9 @@ public class SimpleApiTest {
 
 		// Simple string check
 		Assert.assertTrue(body.contains("Sincere@april.biz"), "Body should contain email");
+		
+		// Clean up the used response 
+		response.dispose();
 	}
 
 	@Test
@@ -99,6 +102,9 @@ public class SimpleApiTest {
 		// Verify we get a 404 (Not Found), not a 200 or 500
 		Assert.assertEquals(response.status(), 404, "Should return 404 for non-existent user");
 		System.out.println("Correctly received 404 Not Found.");
+		
+		// Clean up the used response 
+		 response.dispose();
 	}
 
 	/* Expected Request:
@@ -152,6 +158,9 @@ public class SimpleApiTest {
 		Assert.assertTrue(jsonResponse.has("id"), "Should have generated ID");
 		int postId = jsonResponse.get("id").getAsInt();
 		System.out.println("Created post with ID: " + postId);
+		
+		// Clean up the used response
+		response.dispose();
 	}
 
 	@Test
@@ -166,6 +175,9 @@ public class SimpleApiTest {
 		// JSONPlaceholder still accepts this (returns 201)
 		// Real APIs would typically return 400 Bad Request
 		Assert.assertEquals(response.status(), 201, "JSONPlaceholder accepts partial data (real APIs might not)");
+		
+		// Clean up the used response 
+		 response.dispose();
 	}
 
 	@Test
@@ -178,6 +190,7 @@ public class SimpleApiTest {
 
 		APIResponse createResponse = apiContext.post("/posts", RequestOptions.create().setData(postData));
 		Assert.assertEquals(createResponse.status(), 201);
+		createResponse.dispose();
 
 		// 2. Read (GET)
 		// Note: Since JSONPlaceholder doesn't persist data,
@@ -186,6 +199,7 @@ public class SimpleApiTest {
 		// "/posts/" + newId
 		APIResponse getResponse = apiContext.get("/posts/1");
 		Assert.assertEquals(getResponse.status(), 200);
+		getResponse.dispose();
 
 		// 3. Update (PUT) - Coming in Part 3
 		// 4. Delete (DELETE) - Coming in Part 4

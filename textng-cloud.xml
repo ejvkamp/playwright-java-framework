@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CloudSuite" parallel="tests" thread-count="5">
+   
+   <!-- Test 1: Chrome on Windows -->
+   <test name="Chrome_Windows">
+	 <parameter name="executionMode" value="cloud"/>
+       <parameter name="platform" value="Windows 11"/>
+       <parameter name="browser" value="chrome"/>
+       <classes>
+           <class name="com.automation.tests.MySecondPlaywrightTestPOM"/>
+       </classes>
+   </test>
+
+   <!-- Test 2: Safari on Mac -->
+   <test name="Safari_Mac">
+	 <parameter name="executionMode" value="cloud"/>
+       <parameter name="platform" value="macOS Ventura"/>
+       <parameter name="browser" value="webkit"/>
+        <classes>
+           <class name="com.automation.tests.MySecondPlaywrightTestPOM"/>
+       </classes>
+   </test>
+</suite>

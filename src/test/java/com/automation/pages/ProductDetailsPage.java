@@ -33,12 +33,16 @@ public class ProductDetailsPage {
     private final Locator increaseQuantityBtn;
     private final Locator addToCartBtn;
     private final Locator viewCartLink;
+    // Adding locator for product quantity field
+    private final Locator quantityInput;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductDetailsPage.class);
 
     public ProductDetailsPage(Page page) {
         this.page = page;
         this.increaseQuantityBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Increase quantity"));
+        // Assigning product quantity field to locator
+        this.quantityInput = page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Qty"));
         this.addToCartBtn = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add to Cart"));
         this.viewCartLink = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("View Cart"));
     }
@@ -53,6 +57,9 @@ public class ProductDetailsPage {
             for (int i = 0; i < times; i++) {
                 increaseQuantityBtn.click();
             }
+            // Postcondition: confirm the quantity actually updated as expected
+            int expectedQuantity = 1 + times;
+            assertThat(quantityInput).hasValue(String.valueOf(expectedQuantity));
     	});
     }
 

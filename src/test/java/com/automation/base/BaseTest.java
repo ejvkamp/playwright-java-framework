@@ -24,16 +24,17 @@ import java.util.Date;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 //Add Axe imports for Accessibility Testing (Shared capability)
 import com.deque.html.axecore.playwright.AxeBuilder;
 import com.deque.html.axecore.results.AxeResults;
+import com.google.gson.Gson;
 
 //import org.testng.Assert;
 
 // Allure reporting imports
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 
@@ -128,9 +129,13 @@ public class BaseTest {
 
 				// 1. Manually build a JSON String from the Map
 				// Result looks like: {"platform":"Windows 11",etc...}
-				String jsonCaps = "{" + caps.entrySet().stream()
+				String jsonCaps = new Gson().toJson(caps);
+				/* 
+				 * String jsonCaps = "{" + caps.entrySet().stream()
 						.map(e -> "\"" + e.getKey() + "\":\"" + e.getValue() + "\"").collect(Collectors.joining(","))
 						+ "}";
+						
+				*/
 
 				// 2. URL Encode the JSON String and attach it to the 'capabilities' query param
 				String cdpUrl = "wss://cdp.lambdatest.com/playwright?capabilities="
@@ -180,8 +185,7 @@ public class BaseTest {
 	@BeforeMethod
 	public void createContextAndPage() {
 		LOGGER.info("Setting up context for the method...");
-		// We can add the viewport size here to ensure the responsive page loads
-		// correctly
+		// We can add the viewport size here to ensure the responsive page loads correctly 
 		context = browser.newContext(new Browser.NewContextOptions().setViewportSize(1920, 1080));
 		// Start tracing
 		LOGGER.info("Starting Trace recording...");
@@ -194,7 +198,7 @@ public class BaseTest {
 	 * Test Teardown Runs after each @Test method. Closes the BrowserContext and
 	 * Page.
 	 */
-	@AfterMethod
+	@AfterMethod(alwaysRun=true)
 	public void closeContext(ITestResult result) {
 	    
 	    // 1. IF FAILURE: Attach Screenshot and Trace to Allure
@@ -215,7 +219,7 @@ public class BaseTest {
 	            }
 	            
 	            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	            java.nio.file.Path tracePath = Paths.get("traces/" + result.getName() + "_" + timestamp + ".zip");
+	            Path tracePath = Paths.get("traces/" + result.getName() + "_" + timestamp + ".zip");
 	            
 	            // Stop tracing and save to file
 	            context.tracing().stop(new Tracing.StopOptions().setPath(tracePath));
@@ -227,11 +231,15 @@ public class BaseTest {
 	                    new ByteArrayInputStream(Files.readAllBytes(tracePath)), ".zip");
 	            }
 	        } catch (Exception e) {
-	            LOGGER.warn("Failed to save or attach Playwright Trace", e);
+	            LOGGER.error("Failed to save trace: {}", e.getMessage(), e);
 	        }
 	    } else {
+	    	try {
 	        // If test passed, just stop tracing without saving to free up memory
 	        context.tracing().stop();
+	    	} catch (Exception e) {
+	    		LOGGER.error("Failed to stop tracing: {}", e.getMessage(), e);
+			}
 	    }
 
 	    // 2. Cloud Status Update Logic (Runs for BOTH Pass and Fail)
