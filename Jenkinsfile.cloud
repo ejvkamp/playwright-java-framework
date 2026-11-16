@@ -3,7 +3,8 @@ pipeline {
    
 	tools {
 	 maven 'Maven'
-	 jdk 'JDK-21'
+	 jdk 'JDK-25'
+	 //jdk 'JDK-21'
 	}
 	
 	// NEW: Inject credentials securely for this specific job
@@ -28,9 +29,9 @@ pipeline {
 	   script {
 		// UPDATED: We pass -Dbrowser=cloud processed by BaseTest
 		if (isUnix()) {
-		 sh 'mvn clean test -Dbrowser=cloud'
+		 sh 'mvn clean test -Dbrowser=cloud -Dtest=CustomModalTest'
 		} else {
-		 bat 'mvn clean test -Dbrowser=cloud'
+		 bat 'mvn clean test -Dbrowser=cloud -Dtest=CustomModalTest'
 		}
 	   }
 	  }
