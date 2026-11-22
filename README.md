@@ -28,10 +28,10 @@ Open a terminal in the project root and run the command:
 ## Start the Practice Shop First
 The tests run against the Much Ado To You practice shop on your own computer. Start it before you run any test and leave it running.
 
-* **To get the shop:** `practice-shop.jar` is in the [much-ado-practice-shop folder](much-ado-practice-shop/) of this repository. You need Java 17 or newer.
+* **To get the shop:** `practice-shop.jar` is in the [much-ado-practice-shop](much-ado-practice-shop/) folder of this repository. You need Java 17 or newer.
 * **To install, start and use it:** follow the [practice shop README](much-ado-practice-shop/README.md).
 
 ## Running the Tests
 * **To run the full regression suite:**
     `mvn test -DsuiteXmlFile=testng.xml`
-
+git
