@@ -36,7 +36,7 @@ public class ResponsiveLayoutTest extends BaseTest {
 		}
 		
 		// 3. Navigate
-		page.navigate("https://ecommerce-playground.lambdatest.io/");
+		page.navigate("http://localhost:8085/");
 
 		// 4. Conditional Assertions (The "Responsive" Logic)
 		// Inspect to identify these unique locators
@@ -68,7 +68,7 @@ public class ResponsiveLayoutTest extends BaseTest {
 	@Test
 	public void discoverBreakpoints() {
 		// Navigate once at the beginning
-		page.navigate("https://ecommerce-playground.lambdatest.io/");
+		page.navigate("http://localhost:8085/");
 
 		int[] widths = { 320, 576, 768, 992, 1200, 1920 };
 		System.out.println("--- Discovery Mode ---");
@@ -85,7 +85,7 @@ public class ResponsiveLayoutTest extends BaseTest {
 
 	@Test
 	public void testOrientationChange() {
-		page.navigate("https://ecommerce-playground.lambdatest.io/");
+		page.navigate("http://localhost:8085/");
 		String desktopMenuSelector = "ul.navbar-nav.horizontal";
 
 		// Portrait (iPad Mini width)

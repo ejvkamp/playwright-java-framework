@@ -1,10 +1,11 @@
-# Playwright Automation Framework for the TestMu AI Playground Website
 
-This repository contains the automated end-to-end test suite for the TestMu AI Playground e-commerce website, built with Playwright for Java, TestNG, and Maven.
+## Playwright Automation Framework for the Much Ado To You Practice Shop
+
+This repository contains the automated end-to-end test suite for the Much Ado To You practice shop (a demo e-commerce website), built with Playwright for Java, TestNG, and Maven.
 
 ## About This Project
 
-This framework is designed to validate the core e-commerce functionality of the TestMu AI Playground website. It follows the Page Object Model (POM) design pattern to ensure the test suite is readable, maintainable, and scalable.
+This framework is designed to validate the core e-commerce functionality of the Much Ado To You practice shop. It follows the Page Object Model (POM) design pattern to ensure the test suite is readable, maintainable, and scalable.
 
 ## Getting Started
 
@@ -23,6 +24,13 @@ Import the project as an "Existing Maven Project."
 3.  **Install Playwright Browsers:** 
 Open a terminal in the project root and run the command: 
 `mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"`
+
+<!-- SHOP MIGRATION (2026-11-16): new section, same text as the book (Scene 18, Step 2c) -->
+## Start the Practice Shop First
+The tests run against the Much Ado To You practice shop on your own computer. Start it before you run any test and leave it running.
+<!-- SHOP MIGRATION (2026-11-18): section shortened to point at the shop folder. Old bullets: start (java -jar practice-shop.jar), check (http://localhost:8085/), stop (Ctrl+C) -->
+* **To get the shop:** `practice-shop.jar` is in the [much-ado-practice-shop folder](https://github.com/ejvkamp/playwright-java-framework/tree/main/much-ado-practice-shop) of this repository. You need Java 17 or newer.
+* **To install, start and use it:** follow the [practice shop README](much-ado-practice-shop/README.md).
 
 ## Running the Tests
 * **To run the full regression suite:**

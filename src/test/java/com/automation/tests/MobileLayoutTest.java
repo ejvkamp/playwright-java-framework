@@ -30,7 +30,7 @@ Browser.NewContextOptions options =
 
 @Test
 public void verifyMobileMenuOniPhone() {
- page.navigate("https://ecommerce-playground.lambdatest.io/");
+ page.navigate("http://localhost:8085/");
 
  String userAgent = (String) page.evaluate("navigator.userAgent");
  int viewportWidth = page.viewportSize().width;

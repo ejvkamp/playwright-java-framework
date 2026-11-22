@@ -7,7 +7,7 @@
        <parameter name="platform" value="Windows 11"/>
        <parameter name="browser" value="chrome"/>
        <classes>
-           <class name="com.automation.tests.MySecondPlaywrightTestPOM"/>
+           <class name="com.automation.tests.CustomModalTest"/>
        </classes>
    </test>
 
@@ -17,7 +17,7 @@
        <parameter name="platform" value="macOS Ventura"/>
        <parameter name="browser" value="webkit"/>
         <classes>
-           <class name="com.automation.tests.MySecondPlaywrightTestPOM"/>
+           <class name="com.automation.tests.CustomModalTest"/>
        </classes>
    </test>
 </suite>

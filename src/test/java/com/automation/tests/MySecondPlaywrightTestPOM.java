@@ -72,7 +72,7 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
 
 		// 3. Continue Navigation
 		home.navigateToDesktopPage();
-
+		
 		// Assert.fail("Inserting failure to test Allure reporting");
 
 		// 4. Filtering
@@ -90,8 +90,7 @@ public class MySecondPlaywrightTestPOM extends BaseTest {
 
 		// --- ASSERT (Business Logic) ---
 		// 7. Verify Price Calculation
-		// Notice how clean this is: all the parsing and math is hidden in the Page
-		// Object
+		// Notice how clean this is: all the parsing and math is hidden in the Page Object
 		cart.verifyPriceCalculation(productName);
 
 		// --- CLEANUP (Final Assert/Act) ---
