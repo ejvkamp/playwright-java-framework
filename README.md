@@ -34,4 +34,3 @@ The tests run against the Much Ado To You practice shop on your own computer. St
 ## Running the Tests
 * **To run the full regression suite:**
     `mvn test -DsuiteXmlFile=testng.xml`
-git
