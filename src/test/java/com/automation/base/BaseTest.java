@@ -172,7 +172,7 @@ public class BaseTest {
 			}
 
 			// Update the browser launch log
-			LOGGER.info("Launching Broswer: {} (Headless: {})", browserName, isHeadless);
+			LOGGER.info("Launching Browser: {} (Headless: {})", browserName, isHeadless);
 		}
 
 	}
@@ -326,7 +326,7 @@ public class BaseTest {
 
 		if (accessibilityScanResults.getViolations().isEmpty()) {
 			// System.out.println("No accessibility violations found");
-			LOGGER.info("✓ No accessibility violations found");
+			LOGGER.info("[PASS] No accessibility violations found");
 		} else {
 			// System.out.println("!!! ACCESSIBILITY VIOLATIONS FOUND !!!");
 			// System.out.println("Found " +

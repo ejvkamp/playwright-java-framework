@@ -2,6 +2,8 @@ package com.learning.java;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+//import java.util.List;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
@@ -48,12 +50,12 @@ public class MySecondPlaywrightTestOriginal {
 	
 	// --- ACT (Navigate to Category) ---
     System.out.println("Step 2: Navigating to Desktops page");
-    page.navigate("https://ecommerce-playground.lambdatest.io/");
+    page.navigate("http://localhost:8085/");
     
     // --- ACT(Execute AXE A11y Test) ---
     checkAccessibility(page);
     
-    //page.pause();
+    
     
     page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Mega Menu")).hover();
     
@@ -62,8 +64,9 @@ public class MySecondPlaywrightTestOriginal {
     
     // --- ACT (Advanced Action: Price Slider Filter) ---
     System.out.println("Step 3: Filtering price slider");
+    
     Locator minSlider = page.locator("#mz-filter-panel-0-0 .ui-slider-handle").first();
-   
+       
     // Use the more robust keyboard-based interaction
     minSlider.focus();
     // Since the default is 98 we'll press it 902 times to move it to 1000.
@@ -82,7 +85,8 @@ public class MySecondPlaywrightTestOriginal {
 
   	// --- ACT (Apply In Stock Filter) ---
   	System.out.println("Step 4: Filtering by In Stock");
- 	page.locator("[id^='mz-filter-panel-0-']").getByText("In stock", new Locator.GetByTextOptions().setExact(true)).click();
+  	
+  	page.locator("[id^='mz-filter-panel-0-']").getByText("In stock", new Locator.GetByTextOptions().setExact(true)).click();
  	
 	// ------------------- ASSERT (Verify Search Results Refresh) -------------------
     // Define the locator for the text that only appears after the filter results are complete 
@@ -96,7 +100,7 @@ public class MySecondPlaywrightTestOriginal {
  	// --- ACT (Add to Cart) ---
  	System.out.println("Step 5: Clicking product " + searchItem);
   	page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(searchItem).setExact(true)).click();
-  	
+ 	  	
   	// Wait for navigation / load
   	page.waitForLoadState(LoadState.NETWORKIDLE); 
   	
@@ -129,10 +133,12 @@ public class MySecondPlaywrightTestOriginal {
  	// We find the 'row' that has our searchItem text in it
  	System.out.println("Step 9a: Finding Anchor Row");
  	Locator productRow = page.getByRole(AriaRole.ROW).filter(new Locator.FilterOptions().setHasText(searchItem)).last();
- 	
+ 	 	 	
  	// Validate the row output
  	String rowText = productRow.textContent();
+ 	//List<String> rowText = productRow.allTextContents();
  	System.out.println("Row content: " + rowText);
+ 	 	
  	
 	//  Get the raw text/values from the cells in that row
  	System.out.println("Step 9b: Extract Row Data");
@@ -222,9 +228,9 @@ public class MySecondPlaywrightTestOriginal {
 	    AxeResults accessibilityScanResults = axeBuilder.analyze();
 	    
 	    if (accessibilityScanResults.getViolations().isEmpty()) {
-	        System.out.println("✓ No accessibility violations found");
+	        System.out.println("[PASS] No accessibility violations found");
 	    } else {
-	        System.out.println("✗ Found " + accessibilityScanResults.getViolations().size() + " violations:");
+	        System.out.println("[FAIL] Found " + accessibilityScanResults.getViolations().size() + " violations:");
 	        
 	        accessibilityScanResults.getViolations().forEach(violation -> {
 	            System.out.println("[" + violation.getImpact().toUpperCase() + "] " + 

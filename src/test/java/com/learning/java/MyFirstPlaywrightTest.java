@@ -46,8 +46,8 @@ public class MyFirstPlaywrightTest {
 		Page page = context.newPage();
 
 		// Define the URL of the practice website to be tested.
-		String baseUrl = "https://ecommerce-playground.lambdatest.io/";
-
+		String baseUrl = "http://localhost:8085/";
+		
 		// Define the value for our search item
 		String searchItem = "iPhone";
 
@@ -75,7 +75,7 @@ public class MyFirstPlaywrightTest {
 		System.out.println("Step 4a: Clicking on the first product link.");
 		// Find the first link with the name "iPhone" and click it
 		page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(searchItem)).first().click();
-
+		
 		System.out.println("Step 4b: Add item to cart");
 		page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add to Cart")).click();
 		

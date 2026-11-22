@@ -48,7 +48,7 @@ public class MockingTest extends BaseTest {
         });
 
         // 3. Perform the UI Action with Synchronization
-        page.navigate("https://ecommerce-playground.lambdatest.io/");
+        page.navigate("http://localhost:8085/");
         
         // Use fill() instead of the deprecated type()
         // Note: We use .first() because the page has two search bars (Desktop & Mobile)
@@ -63,7 +63,7 @@ public class MockingTest extends BaseTest {
                 page.getByPlaceholder("Search For Products").first().fill("Spy");
             }
         );
-
+        
         // 4. Validate the UI displays our Stubbed Data
         // We find the specific dropdown item that matches our mock name to avoid ambiguity.
         Locator resultItem = page.locator(".dropdown-menu li")
@@ -89,7 +89,7 @@ public class MockingTest extends BaseTest {
     
     @Test
     public void testHandle500Error() {
-     String checkoutUrl = "https://ecommerce-playground.lambdatest.io/index.php?route=checkout/checkout";
+     String checkoutUrl = "http://localhost:8085/index.php?route=checkout/checkout";
      // Use a wildcard (*) at the end to match regardless 
      String routePattern = "**/index.php?route=checkout/checkout*";
 
@@ -133,7 +133,7 @@ public class MockingTest extends BaseTest {
      });
      
      // Navigate to the homepage to generate traffic
-     page.navigate("https://ecommerce-playground.lambdatest.io/");
+     page.navigate("http://localhost:8085/");
      
      // Simple assertion to ensure page loaded
      assertThat(page).hasTitle("Your Store");

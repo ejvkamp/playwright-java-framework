@@ -1,4 +1,4 @@
-<!-- SHOP MIGRATION (2026-11-18): new folder; this README and the LICENSE are the shop's own (MIT), download link points at this repo's release -->
+<!-- SHOP MIGRATION (2026-11-18): new folder; this README and the LICENSE are the shop's own (MIT); the jar is downloaded from this folder (no release) -->
 # Much Ado To You: the practice shop
 
 A small online shop for practicing test automation, built for readers of *Much Ado About Automation: A Playwright Guide for Java*.
@@ -11,9 +11,10 @@ only listens on `localhost`, so other computers cannot reach it.
 
 You need **Java 17 or newer**. If you can run the book's projects you already have it; check with `java -version`.
 
-1. Download `much-ado-practice-shop-1.0.1.zip` from the [practice shop release](https://github.com/ejvkamp/playwright-java-framework/releases/tag/practice-shop-v1.0.1),
-   unzip it, and open a terminal in the unzipped folder (it holds `practice-shop.jar`, this README and the LICENSE).
-   Already cloned this repository? `practice-shop.jar` is in this `much-ado-practice-shop` folder too: open a terminal there and go to step 2.
+1. Get `practice-shop.jar` from this folder:
+   * **Cloned this repository?** The jar is already here. Open a terminal in the `much-ado-practice-shop` folder.
+   * **Not cloned it?** Open the [much-ado-practice-shop folder](https://github.com/ejvkamp/playwright-java-framework/tree/main/much-ado-practice-shop)
+     on GitHub, click `practice-shop.jar`, then click the download button. Open a terminal in the folder you saved it to.
 2. Start it:
 
    ```
@@ -63,7 +64,7 @@ directly, so search the project for `8085` and replace it with your port everywh
 | Address | What it does |
 |---|---|
 | `/health` | Answers `ok` while the shop is up. |
-| `/version` | The shop's release version. |
+| `/version` | The shop's version (1.0.1). |
 | `/reset` | Forgets every customer, cart and order. Run it for a clean slate between practice sessions. |
 
 Everything lives in memory, so stopping and restarting the shop also gives you a clean slate.

@@ -20,7 +20,7 @@ public class NetworkTest extends BaseTest {
 			Page networkPage = networkContext.newPage();
 
 			// 1. Load the page first (Online)
-			networkPage.navigate("https://ecommerce-playground.lambdatest.io/");
+			networkPage.navigate("http://localhost:8085/");
 
 			// 2. Simulate "Offline"
 			// This cuts the connection at the browser level.
@@ -102,7 +102,7 @@ public class NetworkTest extends BaseTest {
 
 			// 3. Verify loading behavior
 			long startTime = System.currentTimeMillis();
-			page.navigate("https://ecommerce-playground.lambdatest.io/");
+			page.navigate("http://localhost:8085/");
 			long duration = System.currentTimeMillis() - startTime;
 			System.out.println("Page load took: " + duration + "ms");
 
