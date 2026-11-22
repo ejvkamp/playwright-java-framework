@@ -33,7 +33,7 @@ pipeline {
          if (isUnix()) {
                  sh 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
               } else {
-            bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
+            bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"'
 			  } 
  	} else {
 		  echo "Playwright browsers already installed. Skipping download."

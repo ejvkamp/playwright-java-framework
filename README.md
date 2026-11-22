@@ -23,7 +23,7 @@ This framework is designed to validate the core e-commerce functionality of the 
 Import the project as an "Existing Maven Project."
 3.  **Install Playwright Browsers:** 
 Open a terminal in the project root and run the command: 
-`mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"`
+`mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"`
 
 <!-- SHOP MIGRATION (2026-11-16): new section, same text as the book (Scene 18, Step 2c) -->
 ## Start the Practice Shop First
